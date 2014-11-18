@@ -7,7 +7,7 @@ from fabric.state import env
 from fabric.api import run
 
 
-__author__ = 'frojd'
+__author__ = "frojd"
 
 
 REPRO_URL = "SomeRepo"
@@ -55,6 +55,7 @@ def dev():
     env.run = run
     env.app_path = env.DEV_APP_PATH
     env.venv_path = env.DEV_VENV_PATH
+
 
 """Commands"""
 
@@ -122,7 +123,7 @@ def remove_old_versions():
     if not "MAX_VERSIONS" in env:
         return
 
-    if env.DEV_MAX_VERSIONS and _get_releases_path().endswith('/releases'):
+    if env.DEV_MAX_VERSIONS and _get_releases_path().endswith("/releases"):
         max_versions = int(env.DEV_MAX_VERSIONS)
         max_versions = max_versions + 1
 
@@ -196,12 +197,13 @@ def _get_upload_path():
 
 
 def _update_requirements():
-    run('pip install -r %(path)s/requirements/%(file)s' % {
-        'path': _get_current_path(),
-        'file': env.requirements
+    run("pip install -r %(path)s/requirements/%(file)s" % {
+        "path": _get_current_path(),
+        "file": env.requirements
     })
 
 
 def _migrate():
-    with(cd("%s/%s/" % (_get_current_path(),env.stage))):
-        run('python manage.py migrate')
+    with(cd("%s/%s/" % (_get_current_path(), env.stage))):
+        run("python manage.py migrate")
+
