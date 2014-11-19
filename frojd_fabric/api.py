@@ -48,6 +48,7 @@ def deploy():
         print e
         print "Error occured on copy, starting rollback..."
         run_task("rollback")
+        return
 
     # Symlink current folder
     paths.symlink(paths.get_source_path(release_name), paths.get_current_path())
