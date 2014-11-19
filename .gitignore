@@ -1,3 +1,11 @@
-/venv
-/fabricrc.txt
+# Python
 *.pyc
+
+# Fabric
+/fabricrc.txt
+
+# Virtualenv
+/venv
+/lib
+/include
+/bin
