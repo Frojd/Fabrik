@@ -17,6 +17,7 @@ def get_deploy_path(child=None):
 def get_latest_release_path():
     return _path_optional(get_deploy_path(), "releases", "test")
 
+
 def get_releases_path(child=None):
     return _path_optional(get_deploy_path(), "releases", child)
 
