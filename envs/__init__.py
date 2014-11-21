@@ -1,6 +1,7 @@
 from fabric.state import env
 from demo import demo
-from local import local
+from local_django import local_django
 
 
 env.repro_url = ""
+
