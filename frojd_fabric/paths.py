@@ -13,9 +13,23 @@ def get_deploy_path(child=None):
     return path
 
 
-# TODO: Make this work
 def get_latest_release_path():
-    return _path_optional(get_deploy_path(), "releases", "test")
+    path = env.run(
+        "ls -dt %s/*/ | sort -n -t _ -k 2 | tail -1" %
+        get_releases_path(), capture=True)
+
+    if not path:
+        return
+
+    release = Path(path)
+
+    try:
+        int(release.absolute().name)
+    except ValueError, e:
+        print e
+        return
+
+    return release
 
 
 def get_releases_path(child=None):
