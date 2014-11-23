@@ -13,7 +13,7 @@ def get_deploy_path(child=None):
     return path
 
 
-def get_latest_release_path():
+def get_current_release_path():
     path = env.run(
         "ls -dt %s/*/ | sort -n -t _ -k 2 | tail -1" %
         get_releases_path(), capture=True)
