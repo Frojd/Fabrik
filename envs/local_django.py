@@ -1,6 +1,7 @@
 from fabric.state import env
 from fabric.decorators import task
 from fabric.operations import local
+from fabric.context_managers import lcd
 from frojd_fabric.utils import get_stage_var
 from frojd_fabric.utils.elocal import elocal
 
@@ -9,6 +10,7 @@ from frojd_fabric.utils.elocal import elocal
 @task
 def local_django(default=True):
     env.run = elocal
+    env.cd = lcd
     env.stage = "demo"
     env.branch = "develop"
     # env.domain = ""
