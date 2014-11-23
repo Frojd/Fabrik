@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from fabric.decorators import task
-from fabric.context_managers import cd, prefix
+from fabric.context_managers import prefix
 from fabric.state import env
 from fabric.api import execute
 from fabric.task_utils import crawl
@@ -72,6 +72,8 @@ def deploy():
 
     run_hook("after_deploy")
 
+    logger.info("Deploy complete")
+
 
 @task
 def rollback():
@@ -85,6 +87,8 @@ def rollback():
 
     run_hook("rollback")
     run_hook("after_rollback")
+
+    logger.info("Rollback complete")
 
 
 @task
