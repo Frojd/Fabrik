@@ -7,6 +7,7 @@ from fabric.api import execute
 from fabric.task_utils import crawl
 from fabric import state
 from utils import run_task, has_task
+from logger import logger
 import paths
 import time
 from hooks import run_hook, has_hook
@@ -31,8 +32,9 @@ def setup():
 @task
 def deploy():
     if not has_hook("copy"):
-        raise Exception("No copy method has been defined")
+        logger.error("No copy method has been defined")
         return
+
 
     # run_task("before_deploy")
     run_hook("before_deploy")
@@ -45,8 +47,9 @@ def deploy():
     try:
         run_hook("copy")
     except Exception, e:
-        print e
-        print "Error occured on copy, starting rollback..."
+        logger.error("Error occured on copy, starting rollback...")
+        logger.error(e)
+
         run_task("rollback")
         return
 
@@ -57,8 +60,9 @@ def deploy():
     try:
         run_hook("deploy")
     except Exception, e:
-        print e
-        print "Error occured in deploy, starting rollback..."
+        logger.error("Error occured on deploy, starting rollback...")
+        logger.error(e)
+
         run_task("rollback")
         return
 
@@ -71,11 +75,16 @@ def deploy():
 
 @task
 def rollback():
-    print "Rolling back!"
+    run_hook("before_rollback")
 
-    # env.run("rm -rf %s" % env.
+    # Remove version
+    env.run("rm -rf %s" % paths.get_current_release_path())
+
+    # Restore to previous version
+    paths.symlink(paths.get_current_release_path(), paths.get_current_path())
 
     run_hook("rollback")
+    run_hook("after_rollback")
 
 
 @task
