@@ -1,13 +1,8 @@
 from fabric.state import env
-from fabric.decorators import task
 from fabric.context_managers import prefix
-from frojd_fabric import setup, deploy, rollback
-from frojd_fabric.transfer.git import copy
 from frojd_fabric.ext import envfile, virtualenv
 from frojd_fabric import paths
 from frojd_fabric.hooks import hook, run_hook
-from envs import demo
-from unipath import Path
 
 
 @hook("after_setup")

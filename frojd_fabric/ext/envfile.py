@@ -1,7 +1,6 @@
 from fabric.decorators import task
 from fabric.state import env
 from frojd_fabric import paths
-from unipath import Path
 
 
 @task

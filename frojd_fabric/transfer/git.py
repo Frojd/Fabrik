@@ -1,7 +1,6 @@
-from fabric.decorators import task
 from fabric.state import env
-from fabric.context_managers import cd, prefix
-from frojd_fabric.hooks import hook, run_hook
+from fabric.context_managers import cd
+from frojd_fabric.hooks import hook
 
 
 @hook("copy")

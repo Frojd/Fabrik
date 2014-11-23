@@ -1,12 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from fabric.decorators import task
-from fabric.context_managers import prefix
 from fabric.state import env
-from fabric.api import execute
-from fabric.task_utils import crawl
-from fabric import state
-from utils import run_task, has_task
+from utils import run_task
 from logger import logger
 import paths
 import time
