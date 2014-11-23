@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 """
 fabric elocal - "local" command that raises an exception
 ---
@@ -18,6 +20,6 @@ def elocal(*args, **kwargs):
         result = local(*args, **kwargs)
         if result.failed:
             raise CommandFailed("args: %r, kwargs: %r, error code: %r"
-                    % (args, kwargs, result.return_code), result)
+                                % (args, kwargs, result.return_code), result)
         return result
 
