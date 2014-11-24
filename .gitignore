@@ -4,6 +4,9 @@ tmp
 # Python
 *.pyc
 
+# Env
+.env
+
 # Fabric
 fabricrc.txt
 
