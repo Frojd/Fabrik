@@ -2,12 +2,13 @@ from fabric.decorators import task
 from fabric.state import env
 from frojd_fabric import paths
 from unipath import Path
+from frojd_fabric.logger import logger
 
 
 @task
 def create_venv():
     if "venv_path" not in env:
-        # logger.error("No venv_path has been specified")
+        raise Exception("No env.venv_path has been specified")
         return
 
     env.run("virtualenv %s" % get_path())
