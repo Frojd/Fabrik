@@ -2,20 +2,20 @@ from fabric.state import env
 from fabric.context_managers import prefix
 from frojd_fabric.ext import envfile, virtualenv
 from frojd_fabric import paths
-from frojd_fabric.hooks import hook, run_hook
+from frojd_fabric.hooks import hook
 
 
 @hook("after_setup")
 def after_setup():
     envfile.create_env()
-    env.run("virtualenv %s" % paths.get_deploy_path("venv"))
+    virtualenv.create_venv()
 
 
 @hook("deploy")
 def after_deploy():
     envfile.symlink_env()
 
-    with prefix("source %s" % (paths.get_deploy_path("venv")+"/bin/activate")):
+    with prefix("source %s" % (virtualenv.get_path()+"/bin/activate")):
         virtualenv.update_requirements()
         _migrate()
         reload_uwsgi()
