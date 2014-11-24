@@ -1,13 +1,14 @@
-/tmp
+# Ignore temporary files
+tmp
 
 # Python
 *.pyc
 
 # Fabric
-/fabricrc.txt
+fabricrc.txt
 
 # Virtualenv
-/venv
+venv
 /lib
 /include
 /bin
