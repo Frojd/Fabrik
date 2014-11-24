@@ -5,8 +5,8 @@ from frojd_fabric import paths
 from frojd_fabric.hooks import hook
 
 
-@hook("after_setup")
-def after_setup():
+@hook("setup")
+def setup():
     envfile.create_env()
     virtualenv.create_venv()
 
@@ -18,7 +18,6 @@ def after_deploy():
     with prefix("source %s" % (virtualenv.get_path()+"/bin/activate")):
         virtualenv.update_requirements()
         _migrate()
-        reload_uwsgi()
 
 
 def _migrate():
@@ -26,12 +25,7 @@ def _migrate():
         env.run("python manage.py migrate")
 
 
-@hook("deploy")
-def reload_uwsgi():
-    # env.run("touch %s/%s_uwsgi.ini" % (paths.get_deploy_path(), env.stage))
-    pass
-
-
 @hook("rollback")
 def rollback():
+    # TODO: Add migration rollback logic.
     pass
