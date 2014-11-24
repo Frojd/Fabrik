@@ -1,8 +1,33 @@
 # Project name
-A deployscript written in fabric, work in very much progress
+A deploy system based on Fabric, partly inspired by capistrano.
+
+## Features
+- A full Django deploy script with migrations
+- Virtualenv creation and activation
+- Nginx restart/reload
+- Uwsgi restart/reload
+- Envfile handling
+
 
 ## Requirements
-Python 2.7x, Fabric
+To install Frojd-Fabric you need Python 2.7, virtualenv and pip.
 
 ## Installation
-Still in developmode
+
+Frojd-Fabric can be installed through pip.
+
+## Examples
+
+This project ships with examples for Django (just check `examples/django`)
+
+**Develop**
+`pip install git+git://github.com/Frojd/Frojd-Fabric.git@develop`
+
+## Contributing
+
+Want to contribute? Awesome. Just send a pull request.
+
+
+## License
+
+Frojd-Fabric is released under the [MIT License](http://www.opensource.org/licenses/MIT).
