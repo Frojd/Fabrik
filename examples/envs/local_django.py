@@ -25,3 +25,6 @@ def local_django(default=True):
 
     # Django
     env.requirements = "prod.txt"
+
+    # Venv
+    env.venv_path = get_stage_var("VENV_PATH")
