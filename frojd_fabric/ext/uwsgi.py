@@ -5,4 +5,5 @@ def restart():
     env.run("service uwsgi restart")
 
 def reload():
-    env.run("touch %s/%s_uwsgi.ini" % (_get_deploy_path(), env.stage))
+    env.run("touch %s" % (env.uwsgi_ini_path))
+
