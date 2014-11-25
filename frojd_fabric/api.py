@@ -106,3 +106,8 @@ def cleanup_releases(limit=5):
         max_versions)
     )
 
+
+@task
+def debug():
+    from fabric.network import ssh
+    ssh.util.log_to_file("frojd_fabric-debug.log", 10)
