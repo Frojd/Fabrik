@@ -1,5 +1,12 @@
 # -*- coding: utf-8 -*-
 
+"""
+frojd_fabric.paths
+------------------
+This module generates the various paths used by frojd_fabric.
+"""
+
+
 from fabric.state import env
 from unipath import Path
 

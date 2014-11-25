@@ -1,3 +1,11 @@
+# -*- coding: utf-8 -*-
+
+"""
+frojd_fabric.ext.envfile
+------------------
+Contains .env-file helpers
+"""
+
 from fabric.decorators import task
 from fabric.state import env
 from frojd_fabric import paths

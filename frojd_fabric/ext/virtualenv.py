@@ -1,15 +1,21 @@
+# -*- coding: utf-8 -*-
+
+"""
+frojd_fabric.ext.virtualenv
+---------------------------
+Holds methods for managing virtualenv.
+"""
+
 from fabric.decorators import task
 from fabric.state import env
 from frojd_fabric import paths
 from unipath import Path
-from frojd_fabric.logger import logger
 
 
 @task
 def create_venv():
     if "venv_path" not in env:
         raise Exception("No env.venv_path has been specified")
-        return
 
     env.run("virtualenv %s" % get_path())
 

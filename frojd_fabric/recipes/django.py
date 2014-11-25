@@ -1,3 +1,11 @@
+# -*- coding: utf-8 -*-
+
+"""
+frojd_fabric.recipes.django
+---------------------------
+This recipe holds the most standard components of a django installation.
+"""
+
 from fabric.state import env
 from fabric.context_managers import prefix
 from frojd_fabric.ext import envfile, virtualenv

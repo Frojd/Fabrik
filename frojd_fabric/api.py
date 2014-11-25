@@ -1,11 +1,17 @@
 # -*- coding: utf-8 -*-
 
+"""
+frojd_fabric.api
+------------------
+This module contains the implements the frojd_fabric api.
+"""
+
+import time
 from fabric.decorators import task
 from fabric.state import env
 from utils import run_task
 from logger import logger
 import paths
-import time
 from hooks import run_hook, has_hook
 
 
@@ -42,18 +48,17 @@ def deploy():
     try:
         run_hook("copy")
     except Exception, e:
-        logger.error("Error occured on copy. Aborting deploy")
+        logger.error("Error occurred on copy. Aborting deploy")
         logger.error(e)
         return
 
     # Symlink current folder
     paths.symlink(paths.get_source_path(release_name), paths.get_current_path())
 
-
     try:
         run_hook("deploy")
     except Exception, e:
-        logger.error("Error occured on deploy, starting rollback...")
+        logger.error("Error occurred on deploy, starting rollback...")
         logger.error(e)
 
         run_task("rollback")
