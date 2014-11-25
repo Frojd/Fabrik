@@ -31,7 +31,6 @@ def deploy():
         logger.error("No copy method has been defined")
         return
 
-
     # run_task("before_deploy")
     run_hook("before_deploy")
 
@@ -43,10 +42,8 @@ def deploy():
     try:
         run_hook("copy")
     except Exception, e:
-        logger.error("Error occured on copy, starting rollback...")
+        logger.error("Error occured on copy. Aborting deploy")
         logger.error(e)
-
-        run_task("rollback")
         return
 
     # Symlink current folder
@@ -73,13 +70,21 @@ def deploy():
 
 @task
 def rollback():
+    """
+    Rolls back to previous release
+    """
+
     run_hook("before_rollback")
 
-    # Remove version
-    env.run("rm -rf %s" % paths.get_current_release_path())
+    # Remove current version
+    current_release = paths.get_current_release_path()
+    if current_release:
+        env.run("rm -rf %s" % current_release)
 
-    # Restore to previous version
-    paths.symlink(paths.get_current_release_path(), paths.get_current_path())
+    # Restore previous version
+    old_release = paths.get_current_release_path()
+    if old_release:
+        paths.symlink(paths.get_current_release_path(), paths.get_current_path())
 
     run_hook("rollback")
     run_hook("after_rollback")
