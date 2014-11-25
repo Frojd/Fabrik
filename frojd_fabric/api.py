@@ -3,14 +3,14 @@
 """
 frojd_fabric.api
 ------------------
-This module contains the implements the frojd_fabric api.
+This module implements the frojd_fabric api.
 """
 
 import time
 from fabric.decorators import task
 from fabric.state import env
 from utils import run_task
-from logger import logger
+from .logger import logger
 import paths
 from hooks import run_hook, has_hook
 
