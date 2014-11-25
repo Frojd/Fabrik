@@ -13,6 +13,10 @@ def restart():
     env.run("service uwsgi restart")
 
 
-def reload():
+def touch_reload():
     env.run("touch %s" % env.uwsgi_ini_path)
+
+
+def service_reload():
+    env.run("service uwsgi reload")
 
