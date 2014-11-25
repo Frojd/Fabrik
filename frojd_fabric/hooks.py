@@ -33,7 +33,7 @@ def hook(hook_name=None, priority=-1):
 
 
 def run_hook(hook_name, *args, **kwargs):
-    if not has_hook(hook):
+    if not has_hook(hook_name):
         return
 
     hook_list = _hooks[hook_name]
