@@ -14,9 +14,15 @@ def get_deploy_path(child=None):
 
 
 def get_current_release_path():
+    run_args = {}
+
+    # Append capture value if we are running locally
+    if env.run.__name__ == "elocal":
+        run_args["capture"] = True
+
     path = env.run(
         "ls -dt %s/*/ | sort -n -t _ -k 2 | tail -1" %
-        get_releases_path(), capture=True)
+        get_releases_path(), **run_args)
 
     if not path:
         return
