@@ -15,9 +15,14 @@ forever restart app.js
 
 from fabric.decorators import task
 from fabric.state import env
+from frojd_fabric import paths
 
 
 @task
-def restart_forever():
-    env.run("forever restart %s" % app)
+def restart():
+    if "forever_app" not in env:
+        raise Exception("Could not find app to run"
+                "env.forever_app must be set")
+
+    env.run("forever start %s" % env.forever_app)
 
