@@ -25,3 +25,8 @@ def has_task(task):
 
 def get_stage_var(name):
     return env["%s_%s" % (env.stage.upper(), name)]
+
+
+def get_var(name):
+    return env[name]
+
