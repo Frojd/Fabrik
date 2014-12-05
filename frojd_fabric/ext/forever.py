@@ -5,12 +5,7 @@ frojd_fabric.ext.forever
 -------------------------
 Contains methods for dealing with nodejs forever
 
-https://github.com/nodejitsu/forever
-
-forever start app.js
-forever stop app.js
-forever restart app.js
-
+Api doc: https://github.com/nodejitsu/forever
 """
 
 from fabric.decorators import task
