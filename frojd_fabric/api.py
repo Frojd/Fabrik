@@ -111,3 +111,9 @@ def cleanup_releases(limit=5):
 def debug():
     from fabric.network import ssh
     ssh.util.log_to_file("frojd_fabric-debug.log", 10)
+
+
+@task
+def test():
+    env.run("cat /etc/*-release")  # List linux dist info
+
