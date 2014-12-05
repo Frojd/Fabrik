@@ -1,5 +1,14 @@
+# -*- coding: utf-8 -*-
+
+"""
+frojd_fabric.logger
+-------------------
+Root logger for library.
+"""
+
 import logging
 import sys
+
 
 logger = logging.getLogger(__name__)
 

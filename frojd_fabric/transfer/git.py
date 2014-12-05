@@ -1,3 +1,11 @@
+# -*- coding: utf-8 -*-
+
+"""
+frojd_fabric.transfer.git
+-------------------------
+Sets up a standard git clone procedure.
+"""
+
 from fabric.state import env
 from fabric.context_managers import cd
 from frojd_fabric.hooks import hook

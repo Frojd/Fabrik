@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 """
-hooks
------
-A simple hook subscription utility.
+frojd_fabric.hooks
+------------------
+A simple hook subscription utility, used when triggering recipe tasks.
 """
 
 from functools import wraps
@@ -11,11 +11,12 @@ from functools import wraps
 
 _hooks = {}
 
-def hook(hook=None, priority=-1):
-    if not hook in _hooks:
-        _hooks[hook] = []
 
-    hook_list = _hooks[hook]
+def hook(hook_name=None, priority=-1):
+    if not hook_name in _hooks:
+        _hooks[hook_name] = []
+
+    hook_list = _hooks[hook_name]
 
     if priority == -1:
         priority = len(hook_list)
@@ -31,14 +32,14 @@ def hook(hook=None, priority=-1):
     return _hook
 
 
-def run_hook(hook, *args, **kwargs):
-    if not has_hook(hook):
+def run_hook(hook_name, *args, **kwargs):
+    if not has_hook(hook_name):
         return
 
-    hook_list = _hooks[hook]
+    hook_list = _hooks[hook_name]
     for hook_function in hook_list:
         hook_function(*args, **kwargs)
 
 
-def has_hook(hook):
-    return hook in _hooks
+def has_hook(hook_name):
+    return hook_name in _hooks

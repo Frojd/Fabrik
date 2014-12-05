@@ -1,11 +1,17 @@
 # -*- coding: utf-8 -*-
 
+"""
+frojd_fabric.api
+------------------
+This module implements the frojd_fabric api.
+"""
+
+import time
 from fabric.decorators import task
 from fabric.state import env
 from utils import run_task
-from logger import logger
+from .logger import logger
 import paths
-import time
 from hooks import run_hook, has_hook
 
 
@@ -31,7 +37,6 @@ def deploy():
         logger.error("No copy method has been defined")
         return
 
-
     # run_task("before_deploy")
     run_hook("before_deploy")
 
@@ -43,20 +48,17 @@ def deploy():
     try:
         run_hook("copy")
     except Exception, e:
-        logger.error("Error occured on copy, starting rollback...")
+        logger.error("Error occurred on copy. Aborting deploy")
         logger.error(e)
-
-        run_task("rollback")
         return
 
     # Symlink current folder
     paths.symlink(paths.get_source_path(release_name), paths.get_current_path())
 
-
     try:
         run_hook("deploy")
     except Exception, e:
-        logger.error("Error occured on deploy, starting rollback...")
+        logger.error("Error occurred on deploy, starting rollback...")
         logger.error(e)
 
         run_task("rollback")
@@ -73,13 +75,21 @@ def deploy():
 
 @task
 def rollback():
+    """
+    Rolls back to previous release
+    """
+
     run_hook("before_rollback")
 
-    # Remove version
-    env.run("rm -rf %s" % paths.get_current_release_path())
+    # Remove current version
+    current_release = paths.get_current_release_path()
+    if current_release:
+        env.run("rm -rf %s" % current_release)
 
-    # Restore to previous version
-    paths.symlink(paths.get_current_release_path(), paths.get_current_path())
+    # Restore previous version
+    old_release = paths.get_current_release_path()
+    if old_release:
+        paths.symlink(paths.get_current_release_path(), paths.get_current_path())
 
     run_hook("rollback")
     run_hook("after_rollback")
@@ -96,3 +106,8 @@ def cleanup_releases(limit=5):
         max_versions)
     )
 
+
+@task
+def debug():
+    from fabric.network import ssh
+    ssh.util.log_to_file("frojd_fabric-debug.log", 10)
