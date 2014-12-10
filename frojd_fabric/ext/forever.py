@@ -21,3 +21,6 @@ def restart():
 
     env.run("forever start %s" % env.forever_app)
 
+
+def restart_service():
+    env.run("service forever restart")
