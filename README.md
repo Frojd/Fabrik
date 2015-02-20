@@ -1,5 +1,5 @@
 # Project name
-A deploy system based on Fabric, partly inspired by capistrano.
+A deploy system based on Fabric, in part inspired by capistrano.
 
 ## Supports
 - Git support
@@ -12,6 +12,7 @@ A deploy system based on Fabric, partly inspired by capistrano.
 - Forever
 - Envfile handling
 - Celeryd
+- Wordpress
 
 ## Requirements
 To install Frojd-Fabric you need Python 2.7, virtualenv and pip.
