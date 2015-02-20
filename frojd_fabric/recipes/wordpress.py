@@ -3,7 +3,7 @@
 """
 frojd_fabric.recipes.wordpress
 -----------------------------
-Standard recipe to handle wordpress installs.
+This is a basic wordpress recipe that handles shared htaccess, config and files
 """
 
 from fabric.state import env

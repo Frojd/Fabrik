@@ -3,7 +3,7 @@
 """
 frojd_fabric.recipes.node
 ---------------------------------
-Recipe for node.js
+Recipe for node.js that includes envfile
 """
 
 from fabric.state import env
