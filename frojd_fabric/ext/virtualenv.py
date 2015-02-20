@@ -22,6 +22,9 @@ def create_venv():
 
 @task
 def update_requirements():
+    if "requirements" not in env:
+        raise Exception("Missing env.requirements")
+
     env.run("pip install -r %s" % Path(
         env.current_release, "requirements", env.requirements),
     )

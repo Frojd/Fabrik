@@ -2,7 +2,7 @@
 
 """
 frojd_fabric.api
-------------------
+----------------
 This module implements the frojd_fabric api.
 """
 

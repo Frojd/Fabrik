@@ -3,7 +3,7 @@
 """
 frojd_fabric.recipes.django_uwsgi
 ---------------------------------
-This recipe is based on django, but introduces a uwsgi reload on after_deploy
+This recipe is based on django, but introduces a uwsgi reload after_deploy
 """
 
 from frojd_fabric.hooks import hook

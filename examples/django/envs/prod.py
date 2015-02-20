@@ -1,5 +1,5 @@
 """
-Example of a build environment that uses django + uwsgi
+Example of a production environment that uses django + uwsgi
 """
 
 from fabric.state import env
@@ -16,8 +16,8 @@ def demo():
     env.run = run
     env.cd = cd
 
-    env.stage = "demo"
-    env.branch = "develop"
+    env.stage = "prod"
+    env.branch = "master"
 
     # Standard config
     env.hosts = [get_stage_var("HOST")]
