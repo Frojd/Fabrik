@@ -23,8 +23,13 @@ def has_task(task):
     return crawl(task, state.commands) is not None
 
 
-def get_stage_var(name):
-    return env["%s_%s" % (env.stage.upper(), name)]
+def get_stage_var(name, default=None):
+    key = "%s_%s" % (env.stage.upper(), name)
+
+    if default is None:
+        return env["%s_%s" % (env.stage.upper(), name)]
+
+    return env.get(key, default)
 
 
 def get_var(name):
