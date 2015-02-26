@@ -24,7 +24,7 @@ def demo():
     env.user = get_stage_var("USER")
     env.password = get_stage_var("PASSWORD")
     env.app_path = get_stage_var("APP_PATH")
-    env.source_path = get_stage_var("APP_SOURCE_PATH")
+    env.source_path = get_stage_var("APP_SOURCE_PATH", "src")
 
     # Django
     env.requirements = "prod.txt"

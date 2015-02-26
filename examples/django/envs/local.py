@@ -23,7 +23,7 @@ def local():
     env.user = "root"
     env.password = "password"
     env.app_path = get_stage_var("APP_PATH")
-    env.source_path = get_stage_var("APP_SOURCE_PATH")
+    env.source_path = get_stage_var("APP_SOURCE_PATH", "src")
     env.warn_only = False
 
     # Django
