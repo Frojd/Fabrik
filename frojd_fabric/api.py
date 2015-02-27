@@ -9,6 +9,7 @@ This module implements the frojd_fabric api.
 import time
 from fabric.decorators import task
 from fabric.state import env
+from fabric.contrib.files import exists
 from utils import run_task
 from .logger import logger
 import paths
@@ -35,6 +36,10 @@ def setup():
 def deploy():
     if not has_hook("copy"):
         logger.error("No copy method has been defined")
+        return
+
+    if not exists(paths.get_shared_path()):
+        logger.error("You need to run setup before running deploy")
         return
 
     # run_task("before_deploy")
