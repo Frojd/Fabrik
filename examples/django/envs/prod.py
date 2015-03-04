@@ -13,9 +13,6 @@ from frojd_fabric.utils import get_stage_var
 def demo():
     from frojd_fabric.recipes import django_uwsgi
 
-    env.run = run
-    env.cd = cd
-
     env.stage = "prod"
     env.branch = "master"
 
