@@ -34,15 +34,18 @@ def setup():
 
 @task
 def deploy():
+    # Make sure exist are set
+    if "exists" not in env:
+        env.exists = exists
+
     if not has_hook("copy"):
         logger.error("No copy method has been defined")
         return
 
-    if not exists(paths.get_shared_path()):
+    if not env.exists(paths.get_shared_path()):
         logger.error("You need to run setup before running deploy")
         return
 
-    # run_task("before_deploy")
     run_hook("before_deploy")
 
     release_name = int(time.time())
