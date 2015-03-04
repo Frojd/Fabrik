@@ -7,8 +7,10 @@ This module implements the frojd_fabric api.
 """
 
 import time
-from fabric.decorators import task
+from fabric.api import run
 from fabric.state import env
+from fabric.decorators import task, runs_once
+from fabric.context_managers import cd
 from fabric.contrib.files import exists
 from utils import run_task
 from .logger import logger
@@ -16,8 +18,34 @@ import paths
 from hooks import run_hook, has_hook
 
 
+@runs_once
+def init_tasks():
+    """
+    Performs basic setup before any of the tasks are run. All tasks needs to
+    run this before continuing. It only fires once.
+    """
+
+    # Make sure exist are set
+    if "exists" not in env:
+        env.exists = exists
+
+    if "run" not in env:
+        env.run = run
+
+    if "cd" not in env:
+        env.cd = cd
+
+    run_hook("init_tasks")
+
+
 @task
 def setup():
+    """
+    Creates shared and upload directory then fires setup to recipes.
+    """
+
+    init_tasks()
+
     run_hook("before_setup")
 
     # Create shared folder
@@ -34,9 +62,12 @@ def setup():
 
 @task
 def deploy():
-    # Make sure exist are set
-    if "exists" not in env:
-        env.exists = exists
+    """
+    Performs a deploy by invoking copy, then generating next release name and
+    invoking necessary hooks.
+    """
+
+    init_tasks()
 
     if not has_hook("copy"):
         logger.error("No copy method has been defined")
@@ -87,6 +118,8 @@ def rollback():
     Rolls back to previous release
     """
 
+    init_tasks()
+
     run_hook("before_rollback")
 
     # Remove current version
@@ -107,6 +140,12 @@ def rollback():
 
 @task
 def cleanup_releases(limit=5):
+    """
+    Removes older releases.
+    """
+
+    init_tasks()
+
     max_versions = limit + 1
 
     env.run("ls -dt %s/*/ | tail -n +%s | xargs rm -rf" % (
@@ -117,11 +156,27 @@ def cleanup_releases(limit=5):
 
 @task
 def debug():
+    """
+    Outputs debug information, needs to run before the task".
+
+    Example:
+        fab prod debug deploy.
+    """
+
     from fabric.network import ssh
+
+    init_tasks()
     ssh.util.log_to_file("frojd_fabric-debug.log", 10)
 
 
 @task
 def test():
+    """
+    Prints environment information.
+    """
+
+    init_tasks()
+
+    # TODO: Added local test support
     env.run("cat /etc/*-release")  # List linux dist info
 
