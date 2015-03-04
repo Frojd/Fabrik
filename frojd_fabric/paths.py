@@ -54,6 +54,14 @@ def get_shared_path(child=None):
 
 
 def get_current_path(child=None):
+    # current_path overrides default behaviour
+    if "current_path" in env:
+        path_args = [env.current_path]
+        if child:
+            path_args.append(child)
+
+        return Path(path_args)
+
     return _path_optional(get_deploy_path(), "current", child)
 
 
@@ -81,3 +89,4 @@ def _path_optional(base, sub, child=None):
 
 def symlink(origin, dest):
     env.run("ln -nsf %s %s " % (origin, dest))
+
