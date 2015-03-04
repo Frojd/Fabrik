@@ -13,6 +13,10 @@ _hooks = {}
 
 
 def hook(hook_name=None, priority=-1):
+    """
+    Decorator
+    """
+
     if not hook_name in _hooks:
         _hooks[hook_name] = []
 
@@ -43,3 +47,4 @@ def run_hook(hook_name, *args, **kwargs):
 
 def has_hook(hook_name):
     return hook_name in _hooks
+
