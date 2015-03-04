@@ -2,6 +2,7 @@
 Example of a django environment that creates a local build.
 """
 
+import os.path
 from fabric.state import env
 from fabric.decorators import task
 from fabric.context_managers import lcd
@@ -13,8 +14,10 @@ from frojd_fabric.utils.elocal import elocal
 def local():
     from frojd_fabric.recipes import django
 
-    env.run = elocal        # We use local versions of run and cd,
+    # We use local versions of run, cd and exists
+    env.run = elocal
     env.cd = lcd
+    env.exists = os.path.exists
 
     env.stage = "local"
     env.branch = "develop"
