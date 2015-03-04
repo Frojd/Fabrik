@@ -4,6 +4,7 @@ from fabric.task_utils import crawl
 from fabric.api import execute
 from fabric import state
 from fabric.state import env
+from ..logger import logger
 
 
 def run_task(task):
@@ -24,6 +25,9 @@ def has_task(task):
 
 
 def get_stage_var(name, default=None):
+    if "stage" not in env:
+        raise Exception("env.stage cannot be empty")
+
     key = "%s_%s" % (env.stage.upper(), name)
 
     if default is None:
