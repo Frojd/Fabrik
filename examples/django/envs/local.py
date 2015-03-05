@@ -22,12 +22,12 @@ def local():
     env.stage = "local"
     env.branch = "develop"
 
-    # Standard config
-    env.user = "root"
-    env.password = "password"
+    # SSH info are not needed on local deployment.
+    # env.hosts = [get_stage_var("HOST")]
+    # env.user = get_stage_var("USER")
+    # env.password = get_stage_var("PASSWORD")
     env.app_path = get_stage_var("APP_PATH")
     env.source_path = get_stage_var("APP_SOURCE_PATH", "src")
-    env.warn_only = False
 
     # Django
     env.requirements = "prod.txt"
