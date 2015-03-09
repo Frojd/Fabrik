@@ -35,10 +35,6 @@ def init_tasks():
     if "cd" not in env:
         env.cd = cd
 
-    # Remove trailing slash
-    if "current_path" in env:
-        env.current_path.rstrip("/")
-
     run_hook("init_tasks")
 
 
