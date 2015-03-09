@@ -1,5 +1,5 @@
 # Fröjd-Fabric
-A deploy system based on Fabric, in part inspired by capistrano.
+A deploy system built on top of Fabric, in part inspired by capistrano.
 
 ## Supports
 - Git
@@ -21,6 +21,9 @@ To install Frojd-Fabric you need Python 2.7, virtualenv and pip.
 ## Installation
 
 Frojd-Fabric can be installed through pip.
+
+**Stable**
+TODO: Add pip path
 
 **Develop**
 `pip install git+git://github.com/Frojd/Frojd-Fabric.git@develop`
