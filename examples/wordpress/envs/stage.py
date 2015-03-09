@@ -24,6 +24,6 @@ def stage():
     env.app_path = get_stage_var("APP_PATH")
     env.source_path = get_stage_var("APP_SOURCE_PATH", "src")
 
-    # Optional (this will expose app to the webserver)
-    env.web_app_path = get_stage_var("WEB_APP_PATH")
+    # (Optional) Public path (example: var/www/yourproject)
+    env.public_path = get_stage_var("PUBLIC_PATH")
 

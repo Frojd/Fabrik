@@ -15,9 +15,9 @@ from frojd_fabric.ext import composer
 @hook("init_tasks")
 def init_tasks():
     # Remove trailing slash
-    if "web_app_path" in env:
-        web_app_path = env.web_app_path.rstrip("/")
-        env.web_app_path = web_app_path
+    if "public_path" in env:
+        public_path = env.public_path.rstrip("/")
+        env.public_path = public_path
 
 
 @hook("setup")
@@ -43,6 +43,6 @@ def after_deploy():
         paths.get_current_path("wp-content/uploads")
     )
 
-    if "web_app_path" in env:
-        paths.symlink(paths.get_current_path(), env.web_app_path)
+    if "public_path" in env:
+        paths.symlink(paths.get_current_path(), env.public_path)
 
