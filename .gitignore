@@ -1,0 +1,17 @@
+# Ignore temporary files
+tmp
+
+# Python
+*.pyc
+
+# Env
+.env
+
+# Fabric
+fabricrc.txt
+
+# Virtualenv
+venv
+/lib
+/include
+/bin
