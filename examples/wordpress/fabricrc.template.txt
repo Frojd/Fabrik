@@ -1,0 +1,3 @@
+LOCAL_APP_PATH=/Users/ProjectPath/temp/
+
+
