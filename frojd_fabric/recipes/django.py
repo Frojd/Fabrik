@@ -13,6 +13,14 @@ from frojd_fabric import paths
 from frojd_fabric.hooks import hook
 
 
+@hook("init_tasks")
+def init_tasks():
+    # Remove trailing slash
+    if "public_path" in env:
+        public_path = env.public_path.rstrip("/")
+        env.public_path = public_path
+
+
 @hook("setup")
 def setup():
     envfile.create_env()
@@ -26,6 +34,9 @@ def after_deploy():
     with prefix("source %s" % (virtualenv.get_path()+"/bin/activate")):
         virtualenv.update_requirements()
         _migrate()
+
+    if "public_path" in env:
+        paths.symlink(paths.get_current_path(), env.public_path)
 
 
 def _migrate():
