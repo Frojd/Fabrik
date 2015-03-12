@@ -84,7 +84,7 @@ def demo():
 
 Configurations are usually loaded through a fabric settings file. Hard coded values should be avoided in most cases.
 
-```
+```python
 	env.hosts = [get_stage_var("HOST")]
 	env.user = get_stage_var("USER")
 	env.password = get_stage_var("PASSWORD")
