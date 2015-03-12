@@ -13,7 +13,6 @@ from frojd_fabric.hooks import hook
 def stage():
     from frojd_fabric.recipes import wordpress
 
-    # We use local versions of run, cd and exists
     env.stage = "stage"
     env.branch = "develop"
 

@@ -16,8 +16,8 @@ def stage():
     env.run = run
     env.cd = cd
 
-    env.stage = "prod"
-    env.branch = "master"
+    env.stage = "stage"
+    env.branch = "develop"
 
     # Standard config
     env.hosts = [get_stage_var("HOST")]
