@@ -92,6 +92,11 @@ def deploy():
         return
 
     # Symlink current folder
+    if not env.exists(paths.get_source_path(release_name)):
+        logger.error("Source path not found '%s'" %
+                paths.get_source_path(release_name))
+        return
+
     paths.symlink(paths.get_source_path(release_name), paths.get_current_path())
 
     try:
