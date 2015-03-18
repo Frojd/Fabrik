@@ -13,8 +13,8 @@ if sys.argv[-1] == "publish":
     os.system("python setup.py sdist upload")
     sys.exit()
 
-
-packages = find_packages()
+package_exclude = ("tests*", "examples*")
+packages = find_packages(exclude=package_exclude)
 
 with open("README.md") as f:
     readme = f.read()
@@ -35,9 +35,9 @@ long_description = """
 
 
 setup(
-    name="frojd_fabric",
+    name="frojd-fabric",
     version=frojd_fabric.__version__,
-    description=(""),
+    description=("A simple to use deployment toolkit built on top of Fabric"),
     long_description=long_description,
     author="Fröjd",
     author_email="martin.sandstrom@frojd.se",
@@ -58,7 +58,7 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python",
         "Programming Language :: Python :: 2",
-        "Programming Language :: Python :: 2.7"
+        "Programming Language :: Python :: 2.7",
         "Topic :: Software Development :: Build Tools",
         "Topic :: Software Development :: Libraries",
         "Topic :: System :: Software Distribution",
