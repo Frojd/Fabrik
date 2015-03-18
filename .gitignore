@@ -3,6 +3,10 @@ tmp
 
 # Python
 *.pyc
+*.egg
+*.egg-info/
+dist
+build/
 
 # Env
 .env
@@ -15,3 +19,6 @@ venv
 /lib
 /include
 /bin
+
+tags
+.idea/
