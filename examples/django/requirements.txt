@@ -1,1 +1,1 @@
-frojd-fabric==1.0.0
+frojd-fabric
