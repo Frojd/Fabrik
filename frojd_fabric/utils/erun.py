@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
 """
-erun - fabric "run" command that raises an exception
+frojd_fabric.utils.erun
+-----------------------
+Fabric "run" command that raises an exception
 """
 
 from fabric.api import run, settings

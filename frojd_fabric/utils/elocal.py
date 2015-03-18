@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
 """
-fabric elocal - "local" command that raises an exception
----
+frojd_fabric.utils.elocal
+-------------------------
+"local" command that raises an exception
 Credit to https://gist.github.com/lost-theory/1831706
 """
 
