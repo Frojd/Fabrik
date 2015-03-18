@@ -1,5 +1,5 @@
 """
-Example of a production environment that uses django + uwsgi
+Example of a stage environment that uses django + uwsgi
 """
 
 from fabric.state import env

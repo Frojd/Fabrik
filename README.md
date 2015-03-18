@@ -1,5 +1,8 @@
 # Fröjd-Fabric
-A deploy system built on top of Fabric, in part inspired by capistrano.
+A deployment toolkit built on top of Fabric that has been in part inspired by capistrano.
+
+The purpose of this library is to provide a stable python based deploy tool that covers a wide range a use cases,
+Those cases include Wordpress, Node.js and Django. We favor composition and customization by code before configuration.
 
 ## Supports
 - Git
@@ -19,11 +22,10 @@ A deploy system built on top of Fabric, in part inspired by capistrano.
 To install Frojd-Fabric you need Python 2.7, virtualenv and pip.
 
 ## Installation
-
 Frojd-Fabric can be installed through pip.
 
 **Stable**
-TODO: Add pip path
+`pip install frojd-fabric`
 
 **Develop**
 `pip install git+git://github.com/Frojd/Frojd-Fabric.git@develop`
@@ -36,12 +38,17 @@ TODO: Add pip path
 |deploy|Performs the actual deployment|
 |rollback|Removes the current release and reactivates the previous|
 
-## How does it work
+```
+>>> fab stage setup
+>>> fab stage deploy
+```
 
+
+## How does it work
 Frojd-Fabric consists of three parts, stages, recipes and extensions.
 
 ### Stages
-The server stage is stored as a file called {stage}.py and it specifies both the recipe and some of the extensions (depending on recipe). It also defines deployment settings by both loading them from a fabricrc.txt file or hard coded.
+The server stage is stored as a file called {stage}.py and it specifies both the recipe and some of the extensions (depending on recipe). It also defines deployment settings by both loading them from a fabricrc.txt file or hard coded in stage file.
 
 The stages are usually placed in a folder called `envs` or `stages` and are organized like this:
 
@@ -95,10 +102,10 @@ In the sample below `get_stage_var("USER")` will look for a parameter named `DEM
 Here is a more [detailed example](https://github.com/Frojd/Frojd-Fabric/blob/develop/examples/django/fabricrc.template.txt).
 
 ### Recipes
-A recipe is essentially the glue between a stage and extensions. It includes the necessary extensions and applies custom configurations.
+A recipe is essentially the glue between a stage and extensions. It includes the necessary extensions and applies custom configurations that combine different extensions.
 
 ### Extensions
-Is esentially a way of interacting with various server tools and software, such as nginx or uwsgi.
+Is esentially a way of interacting with various server tools and software, such as nginx or uwsgi. Should be kept small, flexible and modular.
 
 ## Parameters
 Frojd-Fabric requires a couple of parameters to work, the standard params (listed below) are required to any setup, while other params are depending on recipe or extension.
@@ -127,11 +134,9 @@ Here's is a [full list of the built in Fabric env vars](http://docs.fabfile.org/
 **TODO: Add more extension configurations**
 
 ## Examples
-
 This project ships with examples for Django and Wordpress (just check `examples/*`)
 
 ## Debugging
-
 Simple, just import `debug` from frojd_fabric.api, then run it with your command.
 Debug will then generate a log file called `frojd_fabric-debug.log`.
 
@@ -139,11 +144,9 @@ Example: `fab debug demo deploy`
 
 
 ## Contributing
-
 Want to contribute? Awesome. Just send a pull request.
 
 
 ## License
-
 Frojd-Fabric is released under the [MIT License](http://www.opensource.org/licenses/MIT).
 

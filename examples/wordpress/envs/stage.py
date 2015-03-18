@@ -1,5 +1,5 @@
 """
-Example of a wordpress environment that creates a local build.
+Example of a wordpress environment that creates a stage build.
 """
 
 import os.path
