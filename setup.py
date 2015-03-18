@@ -16,12 +16,14 @@ if sys.argv[-1] == "publish":
 
 packages = find_packages()
 
-with open('README.md') as f:
+with open("README.md") as f:
     readme = f.read()
 
-requires = parse_requirements("requirements.txt")
+requires = parse_requirements("requirements/install.txt")
 install_requires = [str(ir.req) for ir in requires]
 
+requires = parse_requirements("requirements/tests.txt")
+tests_require = [str(ir.req) for ir in requires]
 
 long_description = """
 
@@ -43,16 +45,23 @@ setup(
     packages=packages,
     include_package_data=True,
     install_requires=install_requires,
+    tests_require=tests_require,
     license="MIT",
     zip_safe=False,
     classifiers=(
         "Development Status :: 4 - Beta",
-        'Environment :: Web Environment',
+        "Environment :: Console",
+        "Environment :: Web Environment",
         "Intended Audience :: Developers",
+        "Intended Audience :: System Administrators",
         "Natural Language :: English",
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python",
-        'Programming Language :: Python :: 2',
+        "Programming Language :: Python :: 2",
         "Programming Language :: Python :: 2.7"
+        "Topic :: Software Development :: Build Tools",
+        "Topic :: Software Development :: Libraries",
+        "Topic :: System :: Software Distribution",
+        "Topic :: System :: Systems Administration",
     ),
 )
