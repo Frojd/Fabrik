@@ -1,5 +1,5 @@
 """
-Example of a build environment that uses django + uwsgi
+Example of a build environment that uses django + uwsgi with emperor
 """
 
 from fabric.state import env
@@ -11,7 +11,7 @@ from frojd_fabric.utils import get_stage_var
 
 @task
 def demo():
-    from frojd_fabric.recipes import django_uwsgi
+    from frojd_fabric.recipes import django_uwsgi_emperor
 
     env.stage = "demo"
     env.branch = "develop"

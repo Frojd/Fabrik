@@ -1,5 +1,11 @@
 # -*- coding: utf-8 -*-
 
+"""
+frojd_fabric.utils
+------------------
+Contains various utility function, such as hooks and way of retriving config
+"""
+
 from fabric.task_utils import crawl
 from fabric.api import execute
 from fabric import state
@@ -38,4 +44,3 @@ def get_stage_var(name, default=None):
 
 def get_var(name):
     return env[name]
-

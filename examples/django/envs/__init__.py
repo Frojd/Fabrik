@@ -1,4 +1,5 @@
 from fabric.state import env
+# Include all your stage environments here
 from demo import demo
 from local import local
 from stage import stage
