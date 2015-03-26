@@ -1,2 +1,3 @@
-include requirements.txt README.md
+include README.md
+recursive-include requirements *
 
