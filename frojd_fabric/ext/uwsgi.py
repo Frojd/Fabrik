@@ -20,3 +20,5 @@ def touch_reload():
 def service_reload():
     env.run("service uwsgi reload")
 
+def service_restart():
+    env.run("service uwsgi restart")
