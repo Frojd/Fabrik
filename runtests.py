@@ -1,34 +1,47 @@
+# -*- coding: utf-8 -*-
+
 import unittest
-import os.path
-import shutil
 from fabric.state import env
-from fabric.context_managers import lcd
-from frojd_fabric.api import setup
-from frojd_fabric.utils.elocal import elocal
-
-
-class TestApi(unittest.TestCase):
-    def setUp(self):
-        env.run = elocal
-        env.cd = lcd
-        env.exists = os.path.exists
-
-    def tearDown(self):
-        try:
-            shutil.rmtree("./tmp/")
-        except OSError:
-            pass
-
-    def test_setup(self):
-        env.app_path = "./tmp/"
-        setup()
-
-        self.assertTrue(os.path.exists(os.path.join(env.app_path, "shared")))
-        self.assertTrue(os.path.exists(os.path.join(env.app_path, "upload")))
+from fabric.state import output
 
 
 def runtests():
-    unittest.main()
+    import logging
+    from frojd_fabric.logger import logger
+
+    # List of modules to test
+    testmodules = [
+        "tests.test_api"
+    ]
+
+    # Mute fabric
+    output["status"] = False
+    output["aborts"] = False
+    output["warnings"] = False
+    output["running"] = False
+    output["stdout"] = False
+    output["stderr"] = False
+    output["exceptions"] = False
+    output["debug"] = False
+
+    # Raise exceptions on errors
+    env.raise_errors = True
+
+    # Disable frojd_fabric logging
+    logger.setLevel(logging.CRITICAL)
+
+    # Construct and run test suite
+    suite = unittest.TestSuite()
+
+    for t in testmodules:
+        try:
+            mod = __import__(t, globals(), locals(), ["suite"])
+            suitefn = getattr(mod, "suite")
+            suite.addTest(suitefn())
+        except (ImportError, AttributeError):
+            suite.addTest(unittest.defaultTestLoader.loadTestsFromName(t))
+
+    unittest.TextTestRunner().run(suite)
 
 
 if __name__ == "__main__":
