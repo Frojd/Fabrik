@@ -1,25 +1,31 @@
+# -*- coding: utf-8 -*-
+
 import unittest
 import os.path
 import shutil
 from fabric.state import env
 from fabric.context_managers import lcd
 from fabric.api import settings
+from fabric.state import output
 from frojd_fabric.api import setup, deploy
 from frojd_fabric.utils.elocal import elocal
 from frojd_fabric import hooks
 from frojd_fabric.transfer import git
 
 
+# Deregister git copy hook
 hooks.unregister_hook("copy", git.copy)
+
+# Run local actions
+env.run = elocal
+env.cd = lcd
+env.exists = os.path.exists
 
 
 class TestApi(unittest.TestCase):
     def setUp(self):
         current_path = os.path.dirname(os.path.abspath(__file__))
 
-        env.run = elocal
-        env.cd = lcd
-        env.exists = os.path.exists
         env.app_path = os.path.join(current_path, "tmp")
 
     def tearDown(self):
@@ -93,7 +99,7 @@ class TestDeployGit(unittest.TestCase):
 
             setup()
 
-            with self.assertRaises(Exception) as context:
+            with self.assertRaises(Exception):
                 deploy()
 
     def test_deploy_repro(self):
@@ -114,11 +120,24 @@ class TestDeployGit(unittest.TestCase):
 
 
 def runtests():
-    from fabric.state import output
+    import logging
+    from frojd_fabric.logger import logger
 
-    # logger.disabled = True
+    # Mute fabric
+    output["status"] = False
+    output["aborts"] = False
+    output["warnings"] = False
     output["running"] = False
+    output["stdout"] = False
+    output["stderr"] = False
+    output["exceptions"] = False
+    output["debug"] = False
+
+    # Raise exceptions on errors
     env.raise_errors = True
+
+    # Disable frojd_fabric logging
+    logger.setLevel(logging.CRITICAL)
 
     unittest.main()
 
