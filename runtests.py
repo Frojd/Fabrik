@@ -70,6 +70,8 @@ class TestApi(unittest.TestCase):
 
 
 class TestDeployGit(unittest.TestCase):
+    # TODO: Change git repro url into something connected to the project.
+
     def setUp(self):
         current_path = os.path.dirname(os.path.abspath(__file__))
         env.app_path = os.path.join(current_path, "tmp")
