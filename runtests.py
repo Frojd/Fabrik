@@ -13,10 +13,10 @@ from frojd_fabric import hooks
 from frojd_fabric.transfer import git
 
 
-# Deregister git copy hook
+# Deregister git copy hook (so we can assign programmatically)
 hooks.unregister_hook("copy", git.copy)
 
-# Run local actions
+# Run in local mode
 env.run = elocal
 env.cd = lcd
 env.exists = os.path.exists
@@ -25,7 +25,6 @@ env.exists = os.path.exists
 class TestApi(unittest.TestCase):
     def setUp(self):
         current_path = os.path.dirname(os.path.abspath(__file__))
-
         env.app_path = os.path.join(current_path, "tmp")
 
     def tearDown(self):
@@ -73,10 +72,6 @@ class TestApi(unittest.TestCase):
 class TestDeployGit(unittest.TestCase):
     def setUp(self):
         current_path = os.path.dirname(os.path.abspath(__file__))
-
-        env.run = elocal
-        env.cd = lcd
-        env.exists = os.path.exists
         env.app_path = os.path.join(current_path, "tmp")
 
     def tearDown(self):
