@@ -143,6 +143,11 @@ Debug will then generate a log file called `frojd_fabric-debug.log`.
 Example: `fab debug demo deploy`
 
 
+## Tests
+
+Tests can be run with `python runtests.py`
+
+
 ## Contributing
 Want to contribute? Awesome. Just send a pull request.
 
