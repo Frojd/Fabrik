@@ -6,6 +6,11 @@ from fabric.state import env
 from fabric.state import output
 
 
+test_suite = [
+    "tests.test_api"
+]
+
+
 def prepare_test():
     import logging
     from frojd_fabric.logger import logger
@@ -32,9 +37,7 @@ def runtests(test_modules=None):
 
     # List of modules to test
     if (not test_modules):
-        testmodules = [
-            "tests.test_api"
-        ]
+        test_modules = test_suite
 
     # Construct and run test suite
     suite = unittest.TestSuite()
