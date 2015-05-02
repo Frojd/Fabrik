@@ -6,7 +6,7 @@ import shutil
 from fabric.state import env
 from fabric.context_managers import lcd
 from fabric.api import settings
-from frojd_fabric.api import setup, deploy
+from frojd_fabric.api import setup, deploy, rollback
 from frojd_fabric.utils.elocal import elocal
 from frojd_fabric import hooks
 from frojd_fabric.transfer import git
@@ -66,6 +66,27 @@ class TestApi(unittest.TestCase):
 
         self.assertTrue("Error occurred on copy. Aborting deploy" in
                         context.exception)
+
+    def test_deploy_rollback(self):
+        hooks.register_hook("copy", git.copy)
+
+        with settings(
+                branch="develop",
+                repro_url="git@github.com:Frojd/Frojd-Django-Boilerplate.git",
+                source_path="django_boilerplate",
+                warn_only=True):
+
+            setup()
+            deploy()
+            deploy()  # Run another callback so we can can roll back
+            rollback()
+
+            self.assertTrue(os.path.exists(os.path.join(
+                env.app_path, "current", "manage.py")
+            ))
+
+            releases = len(os.listdir(os.path.join(env.app_path, "releases")))
+            self.assertEquals(releases, 1)
 
 
 class TestDeployGit(unittest.TestCase):
