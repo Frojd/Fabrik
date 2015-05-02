@@ -6,6 +6,7 @@ import shutil
 from fabric.state import env
 from fabric.context_managers import lcd
 from fabric.api import settings
+from frojd_fabric import paths
 from frojd_fabric.api import setup, deploy, rollback
 from frojd_fabric.utils.elocal import elocal
 from frojd_fabric import hooks
@@ -78,6 +79,9 @@ class TestApi(unittest.TestCase):
 
             setup()
             deploy()
+
+            release_name = paths.get_current_release_name()
+
             deploy()  # Run another callback so we can can roll back
             rollback()
 
@@ -87,6 +91,8 @@ class TestApi(unittest.TestCase):
 
             releases = len(os.listdir(os.path.join(env.app_path, "releases")))
             self.assertEquals(releases, 1)
+
+            self.assertTrue(env.exists(paths.get_releases_path(release_name)))
 
 
 class TestDeployGit(unittest.TestCase):
