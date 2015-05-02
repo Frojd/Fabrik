@@ -21,6 +21,15 @@ def get_deploy_path(child=None):
 
 
 def get_current_release_path():
+    release_name = get_current_release_name()
+
+    if not release_name:
+        return
+
+    return get_releases_path(release_name)
+
+
+def get_current_release_name():
     run_args = {}
 
     # Append capture value if we are running locally
@@ -42,7 +51,7 @@ def get_current_release_path():
         print e
         return
 
-    return release
+    return release.absolute().name
 
 
 def get_releases_path(child=None):
