@@ -1,5 +1,5 @@
 # Fröjd-Fabric
-A deployment toolkit built on top of Fabric that has been in part inspired by capistrano.
+A deployment toolkit built on top of Fabric.
 
 The purpose of this library is to provide a stable python based deploy tool that covers a wide range a use cases,
 Those cases include Wordpress, Node.js and Django. We favor composition and customization by code before configuration.
@@ -29,6 +29,39 @@ Frojd-Fabric can be installed through pip.
 
 **Develop**
 `pip install git+git://github.com/Frojd/Frojd-Fabric.git@develop`
+
+
+## Project layout
+
+We use the following project layout when deploying (it follows the same pattern as the ruby tool capistrano).
+
+```
+┌─────────────┐                            
+│  releases   │─┐                          
+└─────────────┘ │  ┌───────────────────┐   
+                ├─▶│   201504121255    │──┐
+                │  └───────────────────┘  │
+                │  ┌───────────────────┐  │
+                └─▶│   201504121213    │  │
+                   └───────────────────┘  │
+┌─────────────┐                           │
+│   current   │─┬─────────────────────────┘
+└─────────────┘ │  ┌───────────────────┐   
+                ├─▶│     myapp.py      │   
+                │  └───────────────────┘   
+                │  ┌───────────────────┐   
+                └─▶│      urls.py      │   
+                   └───────────────────┘   
+                   ┌───────────────────┐   
+                   │       .env        │◀─┐
+                   └───────────────────┘  │
+┌─────────────┐                           │
+│   shared    │─┐                         │
+└─────────────┘ │  ┌──────────────────┐   │
+                └─▶│       .env       │───┘
+                   └──────────────────┘    
+```
+
 
 ## Commands/tasks
 
@@ -145,7 +178,16 @@ Example: `fab debug demo deploy`
 
 ## Tests
 
-Tests can be run with `python runtests.py`
+Tests can be run with `python runtests.py`, this will run the entire suite.
+
+It also possible to run a specific case:  `python runtests.py tests.test_api.TestApi` 
+
+... or a specific unittest:
+`test_deploy_rollback python runtests.py tests.test_api.TestApi.test_deploy_rollback`
+
+### Writing tests
+
+All tests should reside in the `tests` directory and prefixed `test_*`, to include a test in the main suite add the test path in `runtests.py`.
 
 
 ## Contributing
