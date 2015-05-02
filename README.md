@@ -24,10 +24,10 @@ To install Frojd-Fabric you need Python 2.7, virtualenv and pip.
 ## Installation
 Frojd-Fabric can be installed through pip.
 
-**Stable**
+### Stable
 `pip install frojd-fabric`
 
-**Develop**
+### Develop
 `pip install git+git://github.com/Frojd/Frojd-Fabric.git@develop`
 
 
@@ -151,7 +151,7 @@ Frojd-Fabric requires a couple of parameters to work, the standard params (liste
 |[user](http://docs.fabfile.org/en/1.10/usage/env.html#user)|Username|
 |[password](http://docs.fabfile.org/en/1.10/usage/env.html#password)|SSH Password|
 |[key_filename](http://docs.fabfile.org/en/1.10/usage/env.html#key-filename)|Absolute path to SSH key file|
-|app_path|The path on the remote server where the application should be deployed|
+|app_path|The path on the remote server where the application should be deployed (needs to be absolute)|
 |source_path|If you have a subfolder you want to use as a application front (such as `src`)|
 |current_path|Path where you want your latest release to be linked *(Optional)*|
 |stage|The name of your deployment stage (such as `prod`)|
