@@ -45,6 +45,9 @@ def init_tasks():
     if "cd" not in env:
         env.cd = cd
 
+    if "max_releases" not in env:
+        env.max_releases = 5
+
     run_hook("init_tasks")
 
 
@@ -87,7 +90,7 @@ def deploy():
 
     run_hook("before_deploy")
 
-    release_name = int(time.time())
+    release_name = int(time.time()*1000)
     release_path = paths.get_releases_path(release_name)
 
     env.current_release = release_path
@@ -143,7 +146,8 @@ def rollback():
     # Restore previous version
     old_release = paths.get_current_release_name()
     if old_release:
-        paths.symlink(paths.get_source_path(old_release), paths.get_current_path())
+        paths.symlink(paths.get_source_path(old_release),
+                      paths.get_current_path())
 
     run_hook("rollback")
     run_hook("after_rollback")
