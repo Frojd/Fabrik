@@ -3,6 +3,7 @@
 import unittest
 import os.path
 import shutil
+import time
 from fabric.state import env
 from fabric.context_managers import lcd
 from fabric.api import settings
@@ -22,6 +23,17 @@ env.cd = lcd
 env.exists = os.path.exists
 
 
+def _empty_copy():
+    """
+    A stub copy method that does nothing more then create a .txt file.
+    """
+
+    source_path = os.path.join(env.current_release, "src")
+
+    env.run("mkdir -p %s" % source_path)
+    env.run("touch %s/app.txt" % source_path)
+
+
 class TestApi(unittest.TestCase):
     def setUp(self):
         current_path = os.path.dirname(os.path.abspath(__file__))
@@ -29,6 +41,7 @@ class TestApi(unittest.TestCase):
 
     def tearDown(self):
         hooks.unregister_hook("copy", git.copy)
+        hooks.unregister_hook("copy", _empty_copy)
 
         try:
             shutil.rmtree(env.app_path)
@@ -69,12 +82,10 @@ class TestApi(unittest.TestCase):
                         context.exception)
 
     def test_deploy_rollback(self):
-        hooks.register_hook("copy", git.copy)
+        hooks.register_hook("copy", _empty_copy)
 
         with settings(
-                branch="develop",
-                repro_url="git@github.com:Frojd/Frojd-Django-Boilerplate.git",
-                source_path="django_boilerplate",
+                source_path="src",
                 warn_only=True):
 
             setup()
@@ -86,13 +97,54 @@ class TestApi(unittest.TestCase):
             rollback()
 
             self.assertTrue(os.path.exists(os.path.join(
-                env.app_path, "current", "manage.py")
+                env.app_path, "current", "app.txt")
             ))
 
             releases = len(os.listdir(os.path.join(env.app_path, "releases")))
-            self.assertEquals(releases, 1)
 
+            self.assertEquals(releases, 1)
             self.assertTrue(env.exists(paths.get_releases_path(release_name)))
+
+
+class TestMaxReleases(unittest.TestCase):
+    def setUp(self):
+        current_path = os.path.dirname(os.path.abspath(__file__))
+        env.app_path = os.path.join(current_path, "tmp")
+
+    def tearDown(self):
+        hooks.unregister_hook("copy", _empty_copy)
+
+        try:
+            shutil.rmtree(env.app_path)
+            pass
+        except OSError:
+            pass
+
+    def test_default_maxreleases(self):
+        """
+        Run 7 deploys and verify that 5 are saved, and that the first release
+        is really removed.
+        """
+
+        hooks.register_hook("copy", _empty_copy)
+
+        with settings(source_path="src", warn_only=True):
+            setup()
+
+            deploy()
+
+            release_name = paths.get_current_release_name()
+            first_release_path = paths.get_releases_path(release_name)
+
+            # TODO: Find a better solution then using time.sleep
+            for i in range(6):
+                time.sleep(1)
+                deploy()
+
+            releases = len(os.listdir(paths.get_releases_path()))
+
+            self.assertEquals(releases, 5)
+            self.assertFalse(env.exists(first_release_path))
 
 
 class TestDeployGit(unittest.TestCase):
