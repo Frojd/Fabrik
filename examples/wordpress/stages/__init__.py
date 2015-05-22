@@ -1,4 +1,7 @@
 from fabric.state import env
+# Include all your stage environments here
+from stage import stage
+from prod import prod
 from local import local
 
 from frojd_fabric.transfer.git import copy
