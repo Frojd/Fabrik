@@ -1,3 +1,14 @@
-LOCAL_APP_PATH=/Users/ProjectPath/temp/
+PROD_HOST=iporhosttoserver
+PROD_USER=someuser
+PROD_PASSWORD=somepasswordifkeyisnotused
+PROD_KEY_FILENAME=/path/to/.ssh/id_rsa.pub
+PROD_APP_PATH=/var/django/YOURPROJECT
 
+STAGE_HOST=iporhosttoserver
+STAGE_USER=someuser
+STAGE_PASSWORD=somepasswordifkeyisnotused
+STAGE_KEY_FILENAME=/path/to/.ssh/id_rsa.pub
+STAGE_APP_PATH=/var/django/YOURPROJECT
+
+LOCAL_APP_PATH=/Users/ProjectPath/temp/
 
