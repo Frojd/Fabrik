@@ -67,7 +67,7 @@ def setup():
 
     # Create uploads folder
     env.run("mkdir -p %s" % (paths.get_upload_path()))
-    env.run("chmod 777 %s" % (paths.get_upload_path()))
+    env.run("chmod 775 %s" % (paths.get_upload_path()))
 
     run_hook("setup")
     run_hook("after_setup")
