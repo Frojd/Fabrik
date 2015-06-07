@@ -54,6 +54,7 @@ class TestApi(unittest.TestCase):
 
         self.assertTrue(os.path.exists(os.path.join(env.app_path, "shared")))
         self.assertTrue(os.path.exists(os.path.join(env.app_path, "upload")))
+        self.assertTrue(os.path.exists(os.path.join(env.app_path, "backup")))
 
     def test_deploy(self):
         with self.assertRaises(Exception) as context:
