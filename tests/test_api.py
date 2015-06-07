@@ -54,6 +54,7 @@ class TestApi(unittest.TestCase):
 
         self.assertTrue(os.path.exists(os.path.join(env.app_path, "shared")))
         self.assertTrue(os.path.exists(os.path.join(env.app_path, "upload")))
+        self.assertTrue(os.path.exists(os.path.join(env.app_path, "backup")))
 
     def test_deploy(self):
         with self.assertRaises(Exception) as context:
@@ -169,7 +170,7 @@ class TestDeployGit(unittest.TestCase):
         with settings(
                 branch="develop",
                 repro_url="git@github.com:Frojd/Frojd-Django-Boilerplate1.git",
-                source_path="django_boilerplate",
+                source_path="src",
                 warn_only=True):
 
             setup()
@@ -183,7 +184,7 @@ class TestDeployGit(unittest.TestCase):
         with settings(
                 branch="develop",
                 repro_url="git@github.com:Frojd/Frojd-Django-Boilerplate.git",
-                source_path="django_boilerplate",
+                source_path="src",
                 warn_only=True):
 
             setup()

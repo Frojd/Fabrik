@@ -62,6 +62,10 @@ def get_shared_path(child=None):
     return _path_optional(get_deploy_path(), "shared", child)
 
 
+def get_backup_path(child=None):
+    return _path_optional(get_deploy_path(), "backup", child)
+
+
 def get_current_path(child=None):
     return _path_optional(get_deploy_path(), "current", child)
 
