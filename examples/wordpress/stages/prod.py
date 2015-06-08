@@ -10,7 +10,7 @@ from frojd_fabric.hooks import hook
 
 
 @task
-def stage():
+def prod():
     from frojd_fabric.recipes import wordpress
 
     env.stage = "prod"
