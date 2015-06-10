@@ -17,17 +17,22 @@ from frojd_fabric import paths
 
 
 @task
-def backup_db(limit=5):
-    current_release = paths.get_current_release_name()
+def backup_db(release=None, limit=5):
+    """
+    Backup database and associate it with current release
+    """
+
+    if not release:
+        release = paths.get_current_release_name()
 
     max_versions = limit+1
 
-    if not current_release:
+    if not release:
         return
 
     env.run("mkdir -p %s" % paths.get_backup_path("mysql"))
 
-    backup_file = "mysql/%s.sql.gz" % current_release
+    backup_file = "mysql/%s.sql.gz" % release
     backup_path = paths.get_backup_path(backup_file)
 
     env.run("mysqldump -u %s -p%s %s | gzip -c > %s" %
@@ -39,3 +44,24 @@ def backup_db(limit=5):
         max_versions)
     )
 
+
+@task
+def restore_db(release=None):
+    """
+    Restores backup back to version, uses current version by default.
+    """
+
+    if not release:
+        release = paths.get_current_release_name()
+
+    if not release:
+        raise Exception("Release %s was not found" % release)
+
+    backup_file = "mysql/%s.sql.gz" % release
+    backup_path = paths.get_backup_path(backup_file)
+
+    if not env.exists(backup_path):
+        raise Exception("Backup file %s not found" % backup_path)
+
+    env.run("gunzip < %s | mysql -u %s -p%s %s" %
+            (backup_path, env.mysql_user, env.mysql_password, env.mysql_db))
