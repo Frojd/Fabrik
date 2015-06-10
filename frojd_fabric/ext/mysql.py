@@ -27,10 +27,10 @@ def backup_db(limit=5):
 
     env.run("mkdir -p %s" % paths.get_backup_path("mysql"))
 
-    backup_file = "mysql/%s.sql" % current_release
+    backup_file = "mysql/%s.sql.gz" % current_release
     backup_path = paths.get_backup_path(backup_file)
 
-    env.run("mysqldump -u %s -p%s %s > %s" %
+    env.run("mysqldump -u %s -p%s %s | gzip -c > %s" %
             (env.mysql_user, env.mysql_password, env.mysql_db, backup_path))
 
     # Remove older releases
