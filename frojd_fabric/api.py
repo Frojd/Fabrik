@@ -18,6 +18,16 @@ import paths
 from hooks import run_hook, has_hook
 
 
+def report(msg, err=None):
+    logger.error(msg)
+
+    if err:
+        logger.error(err)
+
+    if hasattr(env, "raise_errors") and env.raise_errors:
+        raise Exception(msg)
+
+
 @runs_once
 def init_tasks():
     """
@@ -34,6 +44,9 @@ def init_tasks():
 
     if "cd" not in env:
         env.cd = cd
+
+    if "max_releases" not in env:
+        env.max_releases = 5
 
     run_hook("init_tasks")
 
@@ -52,9 +65,13 @@ def setup():
     env.run("mkdir -p %s" % (paths.get_shared_path()))
     env.run("chmod 755 %s" % (paths.get_shared_path()))
 
+    # Create backup folder
+    env.run("mkdir -p %s" % (paths.get_backup_path()))
+    env.run("chmod 750 %s" % (paths.get_backup_path()))
+
     # Create uploads folder
     env.run("mkdir -p %s" % (paths.get_upload_path()))
-    env.run("chmod 777 %s" % (paths.get_upload_path()))
+    env.run("chmod 775 %s" % (paths.get_upload_path()))
 
     run_hook("setup")
     run_hook("after_setup")
@@ -70,16 +87,14 @@ def deploy():
     init_tasks()
 
     if not has_hook("copy"):
-        logger.error("No copy method has been defined")
-        return
+        return report("No copy method has been defined")
 
     if not env.exists(paths.get_shared_path()):
-        logger.error("You need to run setup before running deploy")
-        return
+        return report("You need to run setup before running deploy")
 
     run_hook("before_deploy")
 
-    release_name = int(time.time())
+    release_name = int(time.time()*1000)
     release_path = paths.get_releases_path(release_name)
 
     env.current_release = release_path
@@ -87,26 +102,26 @@ def deploy():
     try:
         run_hook("copy")
     except Exception, e:
-        logger.error("Error occurred on copy. Aborting deploy")
-        logger.error(e)
-        return
+        return report("Error occurred on copy. Aborting deploy", err=e)
 
     # Symlink current folder
     if not env.exists(paths.get_source_path(release_name)):
-        logger.error("Source path not found '%s'" %
-                paths.get_source_path(release_name))
-        return
+        return report("Source path not found '%s'" %
+                      paths.get_source_path(release_name))
 
-    paths.symlink(paths.get_source_path(release_name), paths.get_current_path())
+    paths.symlink(paths.get_source_path(release_name),
+                  paths.get_current_path())
 
     try:
         run_hook("deploy")
     except Exception, e:
-        logger.error("Error occurred on deploy, starting rollback...")
+        message = "Error occurred on deploy, starting rollback..."
+
+        logger.error(message)
         logger.error(e)
 
         run_task("rollback")
-        return
+        return report("Error occurred on deploy")
 
     # Clean older releases
     if "max_releases" in env:
@@ -133,9 +148,10 @@ def rollback():
         env.run("rm -rf %s" % current_release)
 
     # Restore previous version
-    old_release = paths.get_current_release_path()
+    old_release = paths.get_current_release_name()
     if old_release:
-        paths.symlink(paths.get_current_release_path(), paths.get_current_path())
+        paths.symlink(paths.get_source_path(old_release),
+                      paths.get_current_path())
 
     run_hook("rollback")
     run_hook("after_rollback")
@@ -184,4 +200,3 @@ def test():
 
     # TODO: Added local test support
     env.run("cat /etc/*-release")  # List linux dist info
-

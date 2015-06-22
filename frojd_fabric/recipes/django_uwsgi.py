@@ -19,5 +19,5 @@ def setup():
 
 @hook("after_deploy")
 def after_deploy():
-    uwsgi.service_reload()
+    uwsgi.service_restart()
 

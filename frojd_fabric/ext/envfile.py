@@ -14,6 +14,7 @@ from frojd_fabric import paths
 @task
 def create_env():
     env.run("touch %s" % paths.get_shared_path(".env"))
+    env.run("chmod 400 %s" % paths.get_shared_path(".env"))
 
 
 @task

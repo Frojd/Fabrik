@@ -23,7 +23,10 @@ def init_tasks():
 @hook("setup")
 def setup():
     env.run("touch %s" % paths.get_shared_path("wp-config.php"))
+    env.run("chmod 400 %s" % paths.get_shared_path("wp-config.php"))
+
     env.run("touch %s" % paths.get_shared_path(".htaccess"))
+    env.run("chmod 644 %s" % paths.get_shared_path(".htaccess"))
 
 
 @hook("deploy")
