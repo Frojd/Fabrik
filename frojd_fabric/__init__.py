@@ -11,7 +11,7 @@ frojd_fabric
 
 
 __title__ = "frojd_fabric"
-__version__ = "1.1.0"
-__build__ = 110
+__version__ = "1.1.1"
+__build__ = 111
 __license__ = "MIT"
 __copyright__ = "Copyright 2014-2015 Fröjd Interactive AB"
