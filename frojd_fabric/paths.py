@@ -20,14 +20,18 @@ def get_deploy_path(child=None):
     return path
 
 
-def get_current_release_path():
+def get_current_release_path(child=None):
     release_name = get_current_release_name()
 
     if not release_name:
         return
 
-    return get_releases_path(release_name)
+    path = get_releases_path(release_name)
 
+    if child:
+        path = Path(path, child)
+
+    return path
 
 def get_current_release_name():
     run_args = {}
