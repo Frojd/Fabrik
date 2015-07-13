@@ -8,6 +8,7 @@ Mysql extension that handles backup and restore (future).
 Params:
     env.mysql_user
     env.mysql_password
+    env.mysql_host
     env.mysql_db
 """
 
@@ -35,8 +36,9 @@ def backup_db(release=None, limit=5):
     backup_file = "mysql/%s.sql.gz" % release
     backup_path = paths.get_backup_path(backup_file)
 
-    env.run("mysqldump -u %s -p%s %s | gzip -c > %s" %
-            (env.mysql_user, env.mysql_password, env.mysql_db, backup_path))
+    env.run("mysqldump -u %s -p%s -h %s %s | gzip -c > %s" %
+            (env.mysql_user, env.mysql_password, env.mysql_host, env.mysql_db,
+             backup_path))
 
     # Remove older releases
     env.run("ls -dt %s/* | tail -n +%s | xargs rm -rf" % (
@@ -63,5 +65,6 @@ def restore_db(release=None):
     if not env.exists(backup_path):
         raise Exception("Backup file %s not found" % backup_path)
 
-    env.run("gunzip < %s | mysql -u %s -p%s %s" %
-            (backup_path, env.mysql_user, env.mysql_password, env.mysql_db))
+    env.run("gunzip < %s | mysql -u %s -p%s -h %s %s" %
+            (backup_path, env.mysql_user, env.mysql_password, env.mysql_host,
+             env.mysql_db))
