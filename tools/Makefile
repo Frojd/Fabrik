@@ -1,4 +1,4 @@
-### Frojd Fabric - Deploy Wrapper ###
+### Fabrik - Deploy Wrapper ###
 # Deployment wrapper for Frojd-Fabric, that simplifies commands running outside virtualenv
 
 # You can setup this using this one line command:
