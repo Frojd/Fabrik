@@ -169,7 +169,7 @@ class TestDeployGit(unittest.TestCase):
 
         with settings(
                 branch="develop",
-                repro_url="git@github.com:Frojd/Frojd-Django-Boilerplate1.git",
+                repro_url="git://github.com/Frojd/Frojd-Django-Boilerplate1.git",  # NOQA
                 source_path="src",
                 warn_only=True):
 
@@ -183,7 +183,7 @@ class TestDeployGit(unittest.TestCase):
 
         with settings(
                 branch="develop",
-                repro_url="git@github.com:Frojd/Frojd-Django-Boilerplate.git",
+                repro_url="git://github.com/Frojd/Frojd-Django-Boilerplate.git",  # NOQA
                 source_path="src",
                 warn_only=True):
 
