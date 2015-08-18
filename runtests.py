@@ -50,7 +50,8 @@ def runtests(test_modules=None):
         except (ImportError, AttributeError):
             suite.addTest(unittest.defaultTestLoader.loadTestsFromName(t))
 
-    unittest.TextTestRunner().run(suite)
+    result = unittest.TextTestRunner().run(suite)
+    sys.exit(not result.wasSuccessful())
 
 
 if __name__ == "__main__":
