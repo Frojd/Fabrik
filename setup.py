@@ -7,6 +7,7 @@ import pip
 
 from setuptools import setup, find_packages
 from pip.req import parse_requirements
+from pypandoc import convert
 import frojd_fabric
 
 
@@ -17,9 +18,7 @@ if sys.argv[-1] == "publish":
 package_exclude = ("tests*", "examples*")
 packages = find_packages(exclude=package_exclude)
 
-with open("README.md") as f:
-    readme = f.read()
-
+# Handle requirements
 requires = parse_requirements("requirements/install.txt",
                               session=pip.download.PipSession())
 install_requires = [str(ir.req) for ir in requires]
@@ -28,23 +27,18 @@ requires = parse_requirements("requirements/tests.txt",
                               session=pip.download.PipSession())
 tests_require = [str(ir.req) for ir in requires]
 
-long_description = """
-
----
-
-%s
-
-""" % readme
+# Convert markdown to rst
+long_description = convert('README.md', 'rst')
 
 
 setup(
-    name="frojd-fabric",
+    name="fabrik",
     version=frojd_fabric.__version__,
     description=("A simple to use deployment toolkit built on top of Fabric"),
     long_description=long_description,
     author="Fröjd",
     author_email="martin.sandstrom@frojd.se",
-    url="https://github.com/frojd/frojd-fabric",
+    url="https://github.com/frojd/fabrik",
     packages=packages,
     include_package_data=True,
     install_requires=install_requires,

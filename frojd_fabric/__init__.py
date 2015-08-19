@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-frojd_fabric
+fabrik
 ------------
 
 :copyright: (c) 2014-2015 by Fröjd Interactive AB
@@ -10,8 +10,8 @@ frojd_fabric
 """
 
 
-__title__ = "frojd_fabric"
-__version__ = "1.1.1"
-__build__ = 111
+__title__ = "fabrik"
+__version__ = "1.2.0"
+__build__ = 120
 __license__ = "MIT"
 __copyright__ = "Copyright 2014-2015 Fröjd Interactive AB"
