@@ -32,13 +32,13 @@ long_description = convert('README.md', 'rst')
 
 
 setup(
-    name="frojd-fabric",
+    name="fabrik",
     version=frojd_fabric.__version__,
     description=("A simple to use deployment toolkit built on top of Fabric"),
     long_description=long_description,
     author="Fröjd",
     author_email="martin.sandstrom@frojd.se",
-    url="https://github.com/frojd/frojd-fabric",
+    url="https://github.com/frojd/fabrik",
     packages=packages,
     include_package_data=True,
     install_requires=install_requires,
