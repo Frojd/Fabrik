@@ -7,7 +7,6 @@ import pip
 
 from setuptools import setup, find_packages
 from pip.req import parse_requirements
-from pypandoc import convert
 import frojd_fabric
 
 
@@ -28,7 +27,11 @@ requires = parse_requirements("requirements/tests.txt",
 tests_require = [str(ir.req) for ir in requires]
 
 # Convert markdown to rst
-long_description = convert('README.md', 'rst')
+try:
+    from pypandoc import convert
+    long_description = convert("README.md", "rst")
+except:
+    long_description = ""
 
 
 setup(

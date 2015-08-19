@@ -15,7 +15,7 @@ build/
 fabricrc.txt
 
 # Virtualenv
-venv
+venv*
 /lib
 /include
 /bin
