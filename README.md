@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/Frojd/Fabrik.svg?branch=master)](https://travis-ci.org/Frojd/Fabrik)
+[![PyPI version](https://badge.fury.io/py/fabrik.svg)](http://badge.fury.io/py/fabrik)
+
 # Fabrik
 A deployment toolkit built on top of Fabric.
 
