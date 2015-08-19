@@ -18,9 +18,7 @@ if sys.argv[-1] == "publish":
 package_exclude = ("tests*", "examples*")
 packages = find_packages(exclude=package_exclude)
 
-with open("README.md") as f:
-    readme = f.read()
-
+# Handle requirements
 requires = parse_requirements("requirements/install.txt",
                               session=pip.download.PipSession())
 install_requires = [str(ir.req) for ir in requires]
