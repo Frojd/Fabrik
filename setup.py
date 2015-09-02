@@ -26,6 +26,7 @@ requires = parse_requirements("requirements/tests.txt",
                               session=pip.download.PipSession())
 tests_require = [str(ir.req) for ir in requires]
 
+
 # Convert markdown to rst
 try:
     from pypandoc import convert
@@ -46,10 +47,15 @@ setup(
     include_package_data=True,
     install_requires=install_requires,
     tests_require=tests_require,
+    entry_points={
+        "console_scripts": [
+            "fabrik = frojd_fabric.scripts.fabrik:main",
+        ]
+    },
     license="MIT",
     zip_safe=False,
     classifiers=(
-        "Development Status :: 4 - Beta",
+        "Development Status :: 5 - Production/Stable",
         "Environment :: Console",
         "Environment :: Web Environment",
         "Intended Audience :: Developers",

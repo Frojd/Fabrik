@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/Frojd/Fabrik.svg?branch=master)](https://travis-ci.org/Frojd/Fabrik)
+[![PyPI version](https://badge.fury.io/py/fabrik.svg)](http://badge.fury.io/py/fabrik)
+
 # Fabrik
 A deployment toolkit built on top of Fabric.
 
@@ -72,8 +75,8 @@ We use the following project layout when deploying (it follows the same pattern 
 |rollback|Removes the current release and reactivates the previous|
 
 ```
->>> fab stage setup
->>> fab stage deploy
+>>> fabrik stage setup
+>>> fabrik stage deploy
 ```
 
 
@@ -173,7 +176,7 @@ This project ships with examples for Django and Wordpress (just check `examples/
 Simple, just import `debug` from frojd_fabric.api, then run it with your command.
 Debug will then generate a log file called `frojd_fabric-debug.log`.
 
-Example: `fab debug demo deploy`
+Example: `fabrik debug demo deploy`
 
 
 ## Tests
