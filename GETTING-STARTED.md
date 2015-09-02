@@ -110,11 +110,11 @@ After that we create stubs for the various server stages (such as prod, dev)
 
 ### Deploy
 
-1. Before you can do a deploy you need to run a setuo command: `fab dev setup -c fabricrc.txt`
+1. Before you can do a deploy you need to run a setuo command: `fabrik dev setup -c fabricrc.txt`
 	
 	This command will create the proper directories and shared files on the server (depending on your recipe). For instance a wordpress recipe will create a file called wp-config.php in the shared folder.
 	
-2. Now time to run a deploy: `fab dev deploy -c fabricrc.txt`. This command will create a new release with a cloned copy of the application.
+2. Now time to run a deploy: `fabrik dev deploy -c fabricrc.txt`. This command will create a new release with a cloned copy of the application.
 
 
 ### Server requirements
