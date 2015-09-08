@@ -4,7 +4,7 @@ from stage import stage
 from prod import prod
 from local import local
 
-from frojd_fabric.transfer.git import copy
+from fabrik.transfer.git import copy
 
 
 # Put settings used by all env stages

@@ -7,7 +7,7 @@ import pip
 
 from setuptools import setup, find_packages
 from pip.req import parse_requirements
-import frojd_fabric
+import fabrik
 
 
 if sys.argv[-1] == "publish":
@@ -37,7 +37,7 @@ except:
 
 setup(
     name="fabrik",
-    version=frojd_fabric.__version__,
+    version=fabrik.__version__,
     description=("A simple to use deployment toolkit built on top of Fabric"),
     long_description=long_description,
     author="Fröjd",
@@ -49,7 +49,7 @@ setup(
     tests_require=tests_require,
     entry_points={
         "console_scripts": [
-            "fabrik = frojd_fabric.scripts.fabrik:main",
+            "fabrik = fabrik.scripts.fabrik:main",
         ]
     },
     license="MIT",

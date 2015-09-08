@@ -6,12 +6,12 @@ from fabric.state import env
 from fabric.api import run
 from fabric.decorators import task
 from fabric.context_managers import cd
-from frojd_fabric.utils import get_stage_var
+from fabrik.utils import get_stage_var
 
 
 @task
 def demo():
-    from frojd_fabric.recipes import django_uwsgi_emperor
+    from fabrik.recipes import django_uwsgi_emperor
 
     env.stage = "demo"
     env.branch = "develop"
