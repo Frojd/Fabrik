@@ -2,16 +2,14 @@
 Example of a wordpress environment that creates a stage build.
 """
 
-import os.path
 from fabric.state import env
 from fabric.decorators import task
-from frojd_fabric.utils import get_stage_var
-from frojd_fabric.hooks import hook
+from fabrik.utils import get_stage_var
 
 
 @task
 def stage():
-    from frojd_fabric.recipes import wordpress
+    from fabrik.recipes import wordpress  # NOQA
 
     env.stage = "stage"
     env.branch = "develop"
@@ -25,4 +23,3 @@ def stage():
 
     # (Optional) Public path (example: var/www/yourproject)
     env.public_path = get_stage_var("PUBLIC_PATH")
-

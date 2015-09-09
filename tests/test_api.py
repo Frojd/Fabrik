@@ -7,11 +7,11 @@ import time
 from fabric.state import env
 from fabric.context_managers import lcd
 from fabric.api import settings
-from frojd_fabric import paths
-from frojd_fabric.api import setup, deploy, rollback
-from frojd_fabric.utils.elocal import elocal
-from frojd_fabric import hooks
-from frojd_fabric.transfer import git
+from fabrik import paths
+from fabrik.api import setup, deploy, rollback
+from fabrik.utils.elocal import elocal
+from fabrik import hooks
+from fabrik.transfer import git
 
 
 # Deregister git copy hook (so we can assign programmatically)

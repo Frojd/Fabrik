@@ -6,13 +6,13 @@ import os.path
 from fabric.state import env
 from fabric.decorators import task
 from fabric.context_managers import lcd
-from frojd_fabric.utils import get_stage_var
-from frojd_fabric.utils.elocal import elocal
+from fabrik.utils import get_stage_var
+from fabrik.utils.elocal import elocal
 
 
 @task
 def local():
-    from frojd_fabric.recipes import wordpress
+    from fabrik.recipes import wordpress  # NOQA
 
     # We use local versions of run, cd and exists
     env.run = elocal
@@ -28,4 +28,3 @@ def local():
     # env.password = get_stage_var("PASSWORD")
     env.app_path = get_stage_var("APP_PATH")
     env.source_path = get_stage_var("APP_SOURCE_PATH", "src")
-
