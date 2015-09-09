@@ -2,16 +2,14 @@
 Example of a wordpress environment that creates a prod build.
 """
 
-import os.path
 from fabric.state import env
 from fabric.decorators import task
-from frojd_fabric.utils import get_stage_var
-from frojd_fabric.hooks import hook
+from fabrik.utils import get_stage_var
 
 
 @task
 def prod():
-    from frojd_fabric.recipes import wordpress
+    from fabrik.recipes import wordpress  # NOQA
 
     env.stage = "prod"
     env.branch = "master"

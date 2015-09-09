@@ -6,13 +6,13 @@ import os.path
 from fabric.state import env
 from fabric.decorators import task
 from fabric.context_managers import lcd
-from frojd_fabric.utils import get_stage_var
-from frojd_fabric.utils.elocal import elocal
+from fabrik.utils import get_stage_var
+from fabrik.utils.elocal import elocal
 
 
 @task
 def local():
-    from frojd_fabric.recipes import django
+    from fabrik.recipes import django
 
     # We use local versions of run, cd and exists
     env.run = elocal

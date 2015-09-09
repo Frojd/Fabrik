@@ -13,7 +13,7 @@ test_suite = [
 
 def prepare_test():
     import logging
-    from frojd_fabric.logger import logger
+    from fabrik.logger import logger
 
     # Mute fabric
     output["status"] = False
@@ -28,7 +28,7 @@ def prepare_test():
     # Raise exceptions on errors
     env.raise_errors = True
 
-    # Disable frojd_fabric logging
+    # Disable fabrik logging
     logger.setLevel(logging.CRITICAL)
 
 

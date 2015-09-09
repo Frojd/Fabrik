@@ -78,7 +78,7 @@ After that we create stubs for the various server stages (such as prod, dev)
 	    env.public_path = get_stage_var("PUBLIC_PATH")
 	```
 
-5. Now time to let fabrik now your stage is available: `touch __init__.py`
+5. Now time to let fabrik know your stage is available: `touch __init__.py`
 6. Add the following:
 
 	```python
@@ -96,7 +96,7 @@ After that we create stubs for the various server stages (such as prod, dev)
 **Settings**
 
 7. Almost done, now we only need to add settings. cd back to your project root: `cd ~/projects/myproject/`
-8. Create a file that will hold your various deployment settings: `touch fabricrc.txt`
+8. Create a file that will hold your deployment settings: `touch fabricrc.txt`
 9. Add the following (replace with your own settings):
 
 	```bash
@@ -110,11 +110,11 @@ After that we create stubs for the various server stages (such as prod, dev)
 
 ### Deploy
 
-1. Before you can do a deploy you need to run a setuo command: `fabrik dev setup -c fabricrc.txt`
+1. Before you can do a deploy you need to run a setuo command: `fabrik dev setup`
 	
 	This command will create the proper directories and shared files on the server (depending on your recipe). For instance a wordpress recipe will create a file called wp-config.php in the shared folder.
 	
-2. Now time to run a deploy: `fabrik dev deploy -c fabricrc.txt`. This command will create a new release with a cloned copy of the application.
+2. Now time to run a deploy: `fabrik dev deploy`. This command will create a new release with a cloned copy of the application.
 
 
 ### Server requirements
