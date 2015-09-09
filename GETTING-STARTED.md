@@ -37,7 +37,7 @@ Time to create the fabfile.
 
 	```python
 	from stages import *
-	from frojd_fabric.api import setup, deploy, rollback, debug
+	from fabrik.api import setup, deploy, rollback, debug
 	```
 
 **Stages**
@@ -57,13 +57,13 @@ After that we create stubs for the various server stages (such as prod, dev)
 	import os.path
 	from fabric.state import env
 	from fabric.decorators import task
-	from frojd_fabric.utils import get_stage_var
-	from frojd_fabric.hooks import hook
+	from fabrik.utils import get_stage_var
+	from fabrik.hooks import hook
 	
 	
 	@task
 	def stage():
-	    from frojd_fabric.recipes import wordpress
+	    from fabrik.recipes import wordpress
 	
 	    env.stage = "stage"
 	    env.branch = "develop"
@@ -86,7 +86,7 @@ After that we create stubs for the various server stages (such as prod, dev)
 	# Include all your stage environments here
 	from stage import stage
 	
-	from frojd_fabric.transfer.git import copy
+	from fabrik.transfer.git import copy
 	
 	
 	# Put settings used by all env stages

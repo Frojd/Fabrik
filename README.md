@@ -30,7 +30,7 @@ To install Fabrik you need Python 2.7, virtualenv and pip.
 Fabrik can be installed through pip.
 
 ### Stable
-`pip install frojd-fabric`
+`pip install fabrik`
 
 ### Develop
 `pip install git+git://github.com/Frojd/Fabrik.git@develop`
@@ -115,11 +115,11 @@ And here is a stage file example, this file represents the demo environment and 
 ```python
 from fabric.state import env
 from fabric.decorators import task
-from frojd_fabric.utils import get_stage_var
+from fabrik.utils import get_stage_var
 
 @task
 def demo():
-	from frojd_fabric.recipes import wordpress
+	from fabrik.recipes import wordpress
 	
 	env.stage = "demo"
 	env.hosts = ["example.com"]
@@ -175,8 +175,8 @@ Here's is a [full list of the built in Fabric env vars](http://docs.fabfile.org/
 This project ships with examples for Django and Wordpress (just check `examples/*`)
 
 ## Debugging
-Simple, just import `debug` from frojd_fabric.api, then run it with your command.
-Debug will then generate a log file called `frojd_fabric-debug.log`.
+Simple, just import `debug` from fabrik.api, then run it with your command.
+Debug will then generate a log file called `fabrik-debug.log`.
 
 Example: `fabrik debug demo deploy`
 
