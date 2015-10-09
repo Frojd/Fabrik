@@ -36,9 +36,12 @@ def update_requirements():
     if "requirements" not in env:
         raise Exception("Missing env.requirements")
 
-    env.run("pip install -r %s" % Path(
-        env.current_release, "requirements", env.requirements),
-    )
+    req_path = Path(env.current_release, "requirements", env.requirements)
+
+    if not env.exists(req_path):
+        raise Exception("Requirement file not found")
+
+    env.run("pip install -r %s" % req_path)
 
 
 def get_path():
