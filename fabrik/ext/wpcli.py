@@ -3,7 +3,7 @@
 """
 fabrik.ext.wpcli
 ------------------
-A collection of celeryd helpers.
+A collection of wp-cli helpers
 """
 
 from fabric.decorators import task
@@ -13,7 +13,7 @@ from fabrik.utils.elocal import elocal
 
 @task
 def remote_to_local_db():
-    name = "latest_land"
+    name = "latest_db"
 
     env.run("wp db export /tmp/%s.sql" % name)
     elocal("scp land.se:/tmp/%s.sql ./" % name)
