@@ -5,11 +5,11 @@ fabrik.ext.wpcli
 ------------------
 A wp-cli extension that contains the following tasks:
 
-    sync_remote_to_local
-    - Replace your remote db with your local
+Params:
+    local_wp_dir
 
-    sync_remote_to_local:force=yes
-    - Same as above but mute the 'are you sure' prompt
+Commands:
+    sync_remote_to_local
 """
 
 import time
@@ -27,6 +27,13 @@ from fabrik.utils.elocal import elocal
 
 @task
 def sync_remote_to_local(force="no"):
+    """
+    Replace your remote db with your local
+
+    Example:
+        sync_remote_to_local:force=yes
+    """
+
     assert "local_wp_dir" in env, "Missing local_wp_dir in env"
 
     if force != "yes":
