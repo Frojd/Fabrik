@@ -10,6 +10,10 @@ Params:
     env.mysql_password
     env.mysql_host
     env.mysql_db
+
+Commands:
+    backup_db
+    restore_db
 """
 
 from fabric.decorators import task
@@ -22,6 +26,11 @@ def backup_db(release=None, limit=5):
     """
     Backup database and associate it with current release
     """
+
+    assert "mysql_user" in env, "Missing mysqL_user in env"
+    assert "mysql_password" in env, "Missing mysql_password in env"
+    assert "mysql_host" in env, "Missing mysql_host in env"
+    assert "mysql_db" in env, "Missing mysql_db in env"
 
     if not release:
         release = paths.get_current_release_name()
@@ -52,6 +61,11 @@ def restore_db(release=None):
     """
     Restores backup back to version, uses current version by default.
     """
+
+    assert "mysql_user" in env, "Missing mysqL_user in env"
+    assert "mysql_password" in env, "Missing mysql_password in env"
+    assert "mysql_host" in env, "Missing mysql_host in env"
+    assert "mysql_db" in env, "Missing mysql_db in env"
 
     if not release:
         release = paths.get_current_release_name()

@@ -26,7 +26,7 @@ from fabrik.utils.elocal import elocal
 
 
 @task
-def remote_to_local_db(force="no"):
+def sync_remote_to_local(force="no"):
     assert "local_wp_dir" in env, "Missing local_wp_dir in env"
 
     if force != "yes":

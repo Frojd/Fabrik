@@ -3,7 +3,7 @@
 """
 fabrik.ext.postgresql
 ----------------------
-A PostgreSQL extension that handles remote/local syncing
+A PostgreSQL extension that handles backups and remote/local syncing
 
 Params:
     psql_user
@@ -15,17 +15,10 @@ Params:
     local_psql_password
 
 Commands:
+    backup_db
+    restore_db
     sync_local_to_remote
-    - Replace your remote db with your local
-
-    sync_local_to_remote:force=yes
-    - Same as above but mute the 'are you sure' prompt
-
     sync_remote_to_local
-    - Replace your local db with your remote
-
-    sync_remote_to_local:force=yes
-    - Same as above but mute the 'are you sure' prompt
 """
 
 import time
@@ -52,9 +45,74 @@ def _check_requirements():
 
 
 @task
+def backup_db(release=None, limit=5):
+    """
+    Backup database and associate it with current release
+    """
+
+    assert "psql_user" in env, "Missing psql_user in env"
+    assert "psql_db" in env, "Missing psql_db in env"
+    assert "psql_password" in env, "Missing psql_password in env"
+
+    if not release:
+        release = paths.get_current_release_name()
+
+    max_versions = limit+1
+
+    if not release:
+        logger.info("No releases present, skipping task")
+        return
+
+    remote_file = "postgresql/%s.sql.tar.gz" % release
+    remote_path = paths.get_backup_path(remote_file)
+
+    env.run("mkdir -p %s" % paths.get_backup_path("postgresql"))
+
+    with context_managers.shell_env(PGPASSWORD=env.psql_password):
+        env.run("pg_dump -h localhost -Fc -f %s -U %s %s -x -O" % (
+            remote_path, env.psql_user, env.psql_db
+        ))
+
+    # Remove older releases
+    env.run("ls -dt %s/* | tail -n +%s | xargs rm -rf" % (
+        paths.get_backup_path("postgresql"),
+        max_versions)
+    )
+
+
+@task
+def restore_db(release=None):
+    """
+    Restores backup back to version, uses current version by default.
+    """
+
+    if not release:
+        release = paths.get_current_release_name()
+
+    if not release:
+        raise Exception("Release %s was not found" % release)
+
+    backup_file = "postgresql/%s.sql.gz" % release
+    backup_path = paths.get_backup_path(backup_file)
+
+    if not env.exists(backup_path):
+        raise Exception("Backup file %s not found" % backup_path)
+
+    with context_managers.shell_env(PGPASSWORD=env.psql_password):
+        env.run("pg_restore --clean -h localhost -d %s -U %s '%s'" % (
+            env.psql_db,
+            env.psql_user,
+            backup_path)
+        )
+
+
+@task
 def sync_local_to_remote(force="no"):
     """
     Sync your local postgres database with remote
+
+    Example:
+        fabrik prod sync_local_to_remote:force=yes
     """
 
     _check_requirements()
@@ -103,6 +161,9 @@ def sync_local_to_remote(force="no"):
 def sync_remote_to_local(force="no"):
     """
     Sync your remote postgres database with local
+
+    Example:
+        fabrik prod sync_remote_to_local
     """
 
     _check_requirements()
