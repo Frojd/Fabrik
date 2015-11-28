@@ -26,4 +26,4 @@ def update(install_path=None):
         install_path = paths.get_current_release_path()
 
     with(env.cd(install_path)):
-        env.run("php composer.phar install")
+        env.run("php composer.phar install --no-scripts --optimize-autoloader")

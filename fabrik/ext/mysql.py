@@ -3,7 +3,7 @@
 """
 fabrik.ext.mysql
 ----------------------
-Mysql extension that handles backup and restore (future).
+Mysql extension that handles backup and restore.
 
 Params:
     env.mysql_user
