@@ -6,6 +6,7 @@ fabrik.ext.virtualenv
 Holds methods for managing virtualenv.
 """
 
+import os
 from unipath import Path
 from fabric.decorators import task
 from fabric.operations import prompt
@@ -33,13 +34,17 @@ def create_venv():
 
 @task
 def update_requirements():
-    if "requirements" not in env:
-        raise Exception("Missing env.requirements")
+    req_dir = os.path.join(env.current_release, "requirements")
+    req_path = None
 
-    req_path = Path(env.current_release, "requirements", env.requirements)
+    if "requirements" in env:
+        req_path = Path(req_dir, env.requirements)
+
+    if not req_path:
+        req_path = Path(req_dir, "%s.txt" % env.stage)
 
     if not env.exists(req_path):
-        raise Exception("Requirement file not found")
+        raise Exception("Requirement file not found at %s", req_path)
 
     env.run("pip install -r %s" % req_path)
 
