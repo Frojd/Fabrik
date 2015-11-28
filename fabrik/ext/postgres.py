@@ -8,8 +8,14 @@ A PostgreSQL extension that contains the following tasks:
     sync_local_to_remote
     - Replace your remote db with your local
 
+    sync_local_to_remote:force=yes
+    - Same as above but mute the 'are you sure' prompt
+
     sync_remote_to_local
     - Replace your local db with your remote
+
+    sync_remote_to_local:force=yes
+    - Same as above but mute the 'are you sure' prompt
 
 """
 
@@ -37,20 +43,21 @@ def _check_requirements():
 
 
 @task
-def sync_local_to_remote():
+def sync_local_to_remote(force="no"):
     """
     Sync your local postgres database with remote
     """
 
     _check_requirements()
 
-    message = "This will replace the remote database '%s' with your "\
-        "local '%s', are you sure [y/n]" % (env.psql_db, env.local_psql_db)
-    answer = prompt(message, "y")
+    if force != "yes":
+        message = "This will replace the remote database '%s' with your "\
+            "local '%s', are you sure [y/n]" % (env.psql_db, env.local_psql_db)
+        answer = prompt(message, "y")
 
-    if answer != "y":
-        logger.info("Sync stopped")
-        return
+        if answer != "y":
+            logger.info("Sync stopped")
+            return
 
     init_tasks()  # Bootstrap fabrik
 
@@ -84,20 +91,21 @@ def sync_local_to_remote():
 
 
 @task
-def sync_remote_to_local():
+def sync_remote_to_local(force="no"):
     """
     Sync your remote postgres database with local
     """
 
     _check_requirements()
 
-    message = "This will replace your local database '%s' with your "\
-        "local '%s', are you sure [y/n]" % (env.local_psql_db, env.psql_db)
-    answer = prompt(message, "y")
+    if force != "yes":
+        message = "This will replace your local database '%s' with your "\
+            "local '%s', are you sure [y/n]" % (env.local_psql_db, env.psql_db)
+        answer = prompt(message, "y")
 
-    if answer != "y":
-        logger.info("Sync stopped")
-        return
+        if answer != "y":
+            logger.info("Sync stopped")
+            return
 
     init_tasks()  # Bootstrap fabrik
 
