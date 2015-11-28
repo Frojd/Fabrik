@@ -16,7 +16,6 @@ A PostgreSQL extension that contains the following tasks:
 
     sync_remote_to_local:force=yes
     - Same as above but mute the 'are you sure' prompt
-
 """
 
 import time
@@ -26,8 +25,8 @@ from fabric.api import get, put
 from fabric import context_managers
 from fabric.operations import prompt
 
-from fabrik.logger import logger
 from fabrik import paths
+from fabrik.logger import logger
 from fabrik.api import init_tasks
 from fabrik.utils.elocal import elocal
 
