@@ -44,7 +44,7 @@ def update_requirements():
         req_path = Path(req_dir, "%s.txt" % env.stage)
 
     if not env.exists(req_path):
-        raise Exception("Requirement file not found at %s", req_path)
+        raise Exception("Requirement file not found at %s" % req_path)
 
     env.run("pip install -r %s" % req_path)
 
