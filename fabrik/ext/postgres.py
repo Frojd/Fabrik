@@ -3,8 +3,18 @@
 """
 fabrik.ext.postgresql
 ----------------------
-A PostgreSQL extension that contains the following tasks:
+A PostgreSQL extension that handles remote/local syncing
 
+Params:
+    psql_user
+    psql_db
+    psql_password
+
+    local_psql_user
+    local_psql_db
+    local_psql_password
+
+Commands:
     sync_local_to_remote
     - Replace your remote db with your local
 
