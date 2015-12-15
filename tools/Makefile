@@ -2,7 +2,7 @@
 # Deployment wrapper for Frojd-Fabric, that simplifies commands running outside virtualenv
 
 # You can setup this using this one line command:
-#   curl -L https://raw.githubusercontent.com/Frojd/Frojd-Fabric/develop/tools/Makefile > ./Makefile
+#   curl -L https://raw.githubusercontent.com/Frojd/Fabrik/develop/tools/Makefile > ./Makefile
 
 VERSION = 1.1
 
