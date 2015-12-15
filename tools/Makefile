@@ -1,10 +1,10 @@
 ### Fabrik - Deploy Wrapper ###
-# Deployment wrapper for Frojd-Fabric, that simplifies commands running outside virtualenv
+# Deployment wrapper for Fabrik, that simplifies commands running outside virtualenv
 
 # You can setup this using this one line command:
 #   curl -L https://raw.githubusercontent.com/Frojd/Fabrik/develop/tools/Makefile > ./Makefile
 
-VERSION = 1.1
+VERSION = 2.1.0
 
 # Usage:
 #   make deploy
@@ -16,11 +16,14 @@ VERSION = 1.1
 # The fabric environment you want to deploy
 FABRIC_ENV = demo
 
+# SSH for agent_deploy
+SSH_KEY = ~/.ssh/id_rsa
+
 # Absolute path to project
 ROOT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 
 # Start ssh agent
-ssh_agent := eval `ssh-agent -s` && ssh-add ~/.ssh/id_rsa
+ssh_agent := eval `ssh-agent -s` && ssh-add $(SSH_KEY)
 
 # Fabric Deploy
 fab_deploy := $(ROOT_DIR)/venv/bin/python $(ROOT_DIR)/venv/bin/fab $(FABRIC_ENV) deploy -c $(ROOT_DIR)/fabricrc.txt
