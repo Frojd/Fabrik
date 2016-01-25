@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 """
-fabrik.ext.postgresql
-----------------------
+fabrik.ext.postgres
+-------------------
 A PostgreSQL extension that handles backups and remote/local syncing
 
 Params:
@@ -169,8 +169,8 @@ def sync_remote_to_local(force="no"):
     _check_requirements()
 
     if force != "yes":
-        message = "This will replace your local database '%s' with your "\
-            "local '%s', are you sure [y/n]" % (env.local_psql_db, env.psql_db)
+        message = "This will replace your local database '%s' with the "\
+            "remote '%s', are you sure [y/n]" % (env.local_psql_db, env.psql_db)
         answer = prompt(message, "y")
 
         if answer != "y":
