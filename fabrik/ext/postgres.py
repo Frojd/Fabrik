@@ -32,6 +32,7 @@ from fabrik import paths
 from fabrik.logger import logger
 from fabrik.api import init_tasks
 from fabrik.utils.elocal import elocal
+from fabrik.hooks import run_hook, has_hook
 
 
 def _check_requirements():
@@ -154,6 +155,9 @@ def sync_local_to_remote(force="no"):
     env.run("rm %s" % remote_path)
     elocal("rm %s" % local_path)
 
+    # Trigger hook
+    run_hook("postgres.after_sync_local_to_remote")
+
     logger.info("Sync complete")
 
 
@@ -206,5 +210,8 @@ def sync_remote_to_local(force="no"):
     # Cleanup
     env.run("rm %s" % remote_path)
     elocal("rm %s" % local_path)
+
+    # Trigger hook
+    run_hook("postgres.after_sync_remote_to_local")
 
     logger.info("Sync complete")
