@@ -7,15 +7,17 @@ This module implements the fabrik api.
 """
 
 import time
+
 from fabric.api import run
 from fabric.state import env
 from fabric.decorators import task, runs_once
 from fabric.context_managers import cd
 from fabric.contrib.files import exists
+
 from utils import run_task
-from .logger import logger
-import paths
 from hooks import run_hook, has_hook
+import paths
+from .logger import logger
 
 
 def report(msg, err=None):
