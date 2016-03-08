@@ -41,7 +41,7 @@ def after_deploy():
 
 def _migrate():
     with(env.cd(paths.get_current_path())):
-        env.run("python manage.py migrate")
+        env.run("python manage.py migrate --noinput")
 
 
 @hook("rollback")
