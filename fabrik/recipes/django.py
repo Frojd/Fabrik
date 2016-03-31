@@ -34,6 +34,7 @@ def after_deploy():
     with prefix("source %s" % (virtualenv.get_path()+"/bin/activate")):
         virtualenv.update_requirements()
         _migrate()
+        _collectstatic()
 
     if "public_path" in env:
         paths.symlink(paths.get_current_path(), env.public_path)
@@ -42,6 +43,11 @@ def after_deploy():
 def _migrate():
     with(env.cd(paths.get_current_path())):
         env.run("python manage.py migrate --noinput")
+
+
+def _collectstatic():
+    with(env.cd(paths.get_current_path())):
+        env.run("python manage.py collectstatic --noinput")
 
 
 @hook("rollback")
