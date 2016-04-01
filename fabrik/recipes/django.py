@@ -34,7 +34,12 @@ def after_deploy():
     with prefix("source %s" % (virtualenv.get_path()+"/bin/activate")):
         virtualenv.update_requirements()
         _migrate()
-        _collectstatic()
+
+        # Handle invalid collectstatic gracefully
+        try:
+            _collectstatic()
+        except Exception as e:  # NOQA
+            pass
 
     if "public_path" in env:
         paths.symlink(paths.get_current_path(), env.public_path)
