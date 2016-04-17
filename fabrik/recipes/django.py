@@ -36,10 +36,7 @@ def after_deploy():
         _migrate()
 
         # Handle invalid collectstatic gracefully
-        try:
-            _collectstatic()
-        except Exception as e:  # NOQA
-            pass
+        _collectstatic()
 
     if "public_path" in env:
         paths.symlink(paths.get_current_path(), env.public_path)
@@ -52,7 +49,7 @@ def _migrate():
 
 def _collectstatic():
     with(env.cd(paths.get_current_path())):
-        env.run("python manage.py collectstatic --noinput")
+        env.run("python manage.py collectstatic --noinput", warn_only=True)
 
 
 @hook("rollback")
