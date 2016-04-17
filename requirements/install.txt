@@ -1,2 +1,4 @@
 Fabric==1.10.0
 Unipath==1.0
+Jinja2==2.8
+PyYAML==3.11

@@ -1,0 +1,12 @@
+settings:
+    transfer: transfer.git
+
+    branch: develop
+    repro_url: git@github.com:Frojd/Example.git
+
+local:
+    recipe: recipes.wordpress
+    hosts: localhost
+    app_path: /Users/random/project
+    local: true
+
