@@ -34,8 +34,14 @@ def create_venv():
 
 @task
 def update_requirements():
-    req_dir = os.path.join(env.current_release, "requirements")
+    req_dir = None
     req_path = None
+
+    if "requirements_root" in env:
+        req_dir = os.path.join(env.current_release, env.requirements_root)
+
+    if not req_dir:
+        req_dir = os.path.join(env.current_release, "requirements")
 
     if "requirements" in env:
         req_path = Path(req_dir, env.requirements)
