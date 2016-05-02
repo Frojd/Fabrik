@@ -10,7 +10,8 @@ from fabric.task_utils import crawl
 from fabric.api import execute
 from fabric import state
 from fabric.state import env
-from ..logger import logger
+# from ..logger import logger
+import logger
 
 
 def run_task(task):

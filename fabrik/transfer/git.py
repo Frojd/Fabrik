@@ -11,8 +11,8 @@ Params:
 
 from fabric.state import env
 from fabric.context_managers import settings
-from fabrik.hooks import hook
-from ..logger import logger
+from hooks import hook
+from logger import logger
 
 
 @hook("copy")

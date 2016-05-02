@@ -22,3 +22,6 @@ venv*
 
 tags
 .idea/
+
+# Yml config
+fabrik.yml

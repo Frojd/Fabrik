@@ -17,7 +17,7 @@ from fabric.contrib.files import exists
 from utils import run_task
 from hooks import run_hook, has_hook
 import paths
-from .logger import logger
+from logger import logger
 
 
 def report(msg, err=None):
