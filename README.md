@@ -55,7 +55,7 @@ All tests should reside in the `tests` directory and prefixed `test_*`, to inclu
 
 
 ## Documentation
-The documentation can be found [here](documentation/).
+The documentation can be found [here](documentation/README.md).
 
 
 ## Contributing
