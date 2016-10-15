@@ -6,7 +6,7 @@ fabrik.transfer.git
 Sets up a standard git clone procedure.
 
 Params:
-    git_passphrase: Remote server git ssh passphrase (Optional)
+    env.git_passphrase: Remote server git ssh passphrase (Optional)
 """
 
 from fabric.state import env
