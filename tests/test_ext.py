@@ -17,15 +17,16 @@ def run_capture(command):
 class TestComposerFlags(unittest.TestCase):
     def setUp(self):
         # Reset run capture
+        run_capture.out = []
 
         # Run in local mode
         env.run = run_capture
         env.cd = lcd
         env.exists = os.path.exists
 
-        run_capture.out = []
+        env.composer_flags = composer.default_flags
 
-    def test_cookie(self):
+    def test_default_flags(self):
         composer.update('./')
 
         flags = (
@@ -36,6 +37,19 @@ class TestComposerFlags(unittest.TestCase):
             '--no-scripts',
             '--optimize-autoloader',
         )
+
+        for flag in flags:
+            self.assertIn(flag, run_capture.out[-1])
+
+    def test_custom_flags(self):
+
+        flags = (
+            '--random',
+        )
+
+        env.composer_flags = flags
+
+        composer.update('./')
 
         for flag in flags:
             self.assertIn(flag, run_capture.out[-1])
