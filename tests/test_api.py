@@ -4,6 +4,7 @@ import unittest
 import os.path
 import shutil
 import time
+
 from fabric.state import env
 from fabric.context_managers import lcd
 from fabric.api import settings
@@ -16,11 +17,6 @@ from fabrik.transfer import git
 
 # Deregister git copy hook (so we can assign programmatically)
 hooks.unregister_hook("copy", git.copy)
-
-# Run in local mode
-env.run = elocal
-env.cd = lcd
-env.exists = os.path.exists
 
 
 def _empty_copy():
@@ -36,6 +32,11 @@ def _empty_copy():
 
 class TestApi(unittest.TestCase):
     def setUp(self):
+        # Run in local mode
+        env.run = elocal
+        env.cd = lcd
+        env.exists = os.path.exists
+
         current_path = os.path.dirname(os.path.abspath(__file__))
         env.app_path = os.path.join(current_path, "tmp")
 
@@ -109,6 +110,11 @@ class TestApi(unittest.TestCase):
 
 class TestMaxReleases(unittest.TestCase):
     def setUp(self):
+        # Run in local mode
+        env.run = elocal
+        env.cd = lcd
+        env.exists = os.path.exists
+
         current_path = os.path.dirname(os.path.abspath(__file__))
         env.app_path = os.path.join(current_path, "tmp")
 
@@ -152,6 +158,11 @@ class TestDeployGit(unittest.TestCase):
     # TODO: Change git repro url into something connected to the project.
 
     def setUp(self):
+        # Run in local mode
+        env.run = elocal
+        env.cd = lcd
+        env.exists = os.path.exists
+
         current_path = os.path.dirname(os.path.abspath(__file__))
         env.app_path = os.path.join(current_path, "tmp")
 
