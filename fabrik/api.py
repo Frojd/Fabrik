@@ -50,6 +50,10 @@ def init_tasks():
     if "max_releases" not in env:
         env.max_releases = 5
 
+    if "public_path" in env:
+        public_path = env.public_path.rstrip("/")
+        env.public_path = public_path
+
     run_hook("init_tasks")
 
 
