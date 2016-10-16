@@ -64,6 +64,7 @@ After that we create stubs for the various server stages (such as prod, dev)
 	@task
 	def stage():
 	    from fabrik.recipes import wordpress
+        wordpress.register()
 	
 	    env.stage = "stage"
 	    env.branch = "develop"

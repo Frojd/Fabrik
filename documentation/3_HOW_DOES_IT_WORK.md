@@ -8,9 +8,9 @@ The stages are usually placed in a folder called `envs` or `stages` and are orga
 
 ```
 envs
-	__init__.py
-	demo.py
-	prod.py
+    __init__.py
+    demo.py
+    prod.py
 ```
 
 **Example: envs/__init__.py**
@@ -35,20 +35,21 @@ from fabrik.utils import get_stage_var
 
 @task
 def demo():
-	from fabrik.recipes import wordpress
-	
-	env.stage = "demo"
-	env.hosts = ["example.com"]
-	env.user = "deploy"
-	env.password = "password"
+    from fabrik.recipes import wordpress
+    wordpress.register()
+
+    env.stage = "demo"
+    env.hosts = ["example.com"]
+    env.user = "deploy"
+    env.password = "password"
 ```
 
 Configurations are usually loaded through a fabric settings file. Hard coded values should be avoided in most cases.
 
 ```python
-	env.hosts = [get_stage_var("HOST")]
-	env.user = get_stage_var("USER")
-	env.password = get_stage_var("PASSWORD")
+    env.hosts = [get_stage_var("HOST")]
+    env.user = get_stage_var("USER")
+    env.password = get_stage_var("PASSWORD")
 ```
 
 In the sample below `get_stage_var("USER")` will look for a parameter named `DEMO_USER` (since env.stage was named demo) in the fabricrc.txt file.
