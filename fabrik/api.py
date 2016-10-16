@@ -135,6 +135,9 @@ def deploy():
 
     run_hook("after_deploy")
 
+    if "public_path" in env:
+        paths.symlink(paths.get_source_path(release_name), env.public_path)
+
     logger.info("Deploy complete")
 
 
