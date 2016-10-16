@@ -110,13 +110,9 @@ def deploy():
     except Exception, e:
         return report("Error occurred on copy. Aborting deploy", err=e)
 
-    # Symlink current folder
     if not env.exists(paths.get_source_path(release_name)):
         return report("Source path not found '%s'" %
                       paths.get_source_path(release_name))
-
-    paths.symlink(paths.get_source_path(release_name),
-                  paths.get_current_path())
 
     try:
         run_hook("deploy")
@@ -128,6 +124,10 @@ def deploy():
 
         run_task("rollback")
         return report("Error occurred on deploy")
+
+    # Symlink current folder
+    paths.symlink(paths.get_source_path(release_name),
+                  paths.get_current_path())
 
     # Clean older releases
     if "max_releases" in env:
@@ -196,6 +196,7 @@ def debug():
     from fabric.network import ssh
 
     init_tasks()
+
     ssh.util.log_to_file("fabrik-debug.log", 10)
 
 
@@ -207,5 +208,4 @@ def test():
 
     init_tasks()
 
-    # TODO: Added local test support
     env.run("cat /etc/*-release")  # List linux dist info
