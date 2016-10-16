@@ -4,24 +4,18 @@ from fabrik.utils.elocal import elocal
 from fabric.state import env
 from fabrik.ext import composer
 from fabric.context_managers import lcd
-
-
-def run_capture(command):
-    """Helper for retriving env.run issued commands"""
-    run_capture.out = getattr(run_capture, "out", [])
-    run_capture.out.append(command)
-
+from helpers import run_capture, cd_capture
 
 
 
 class TestComposerFlags(unittest.TestCase):
     def setUp(self):
         # Reset run capture
-        run_capture.out = []
+        self.out = []
 
         # Run in local mode
-        env.run = run_capture
-        env.cd = lcd
+        env.run = run_capture(self.out)
+        env.cd = cd_capture(self.out)
         env.exists = os.path.exists
 
         env.composer_flags = composer.default_flags
@@ -39,10 +33,9 @@ class TestComposerFlags(unittest.TestCase):
         )
 
         for flag in flags:
-            self.assertIn(flag, run_capture.out[-1])
+            self.assertIn(flag, self.out[-1])
 
     def test_custom_flags(self):
-
         flags = (
             '--random',
         )
@@ -52,4 +45,4 @@ class TestComposerFlags(unittest.TestCase):
         composer.update('./')
 
         for flag in flags:
-            self.assertIn(flag, run_capture.out[-1])
+            self.assertIn(flag, self.out[-1])
