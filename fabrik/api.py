@@ -107,7 +107,7 @@ def deploy():
 
     try:
         run_hook("copy")
-    except Exception, e:
+    except Exception as e:
         return report("Error occurred on copy. Aborting deploy", err=e)
 
     if not env.exists(paths.get_source_path(release_name)):
@@ -116,7 +116,7 @@ def deploy():
 
     try:
         run_hook("deploy")
-    except Exception, e:
+    except Exception as e:
         message = "Error occurred on deploy, starting rollback..."
 
         logger.error(message)

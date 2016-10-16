@@ -20,6 +20,6 @@ def erun(*args, **kwargs):
         result = run(*args, **kwargs)
         if result.failed:
             raise RunFailedCommand("args: %r, kwargs: %r, error code: %r"
-                                   % (args, kwargs, result.return_code), result)
+                                   % (args, kwargs, result.return_code),
+                                   result)
         return result
-

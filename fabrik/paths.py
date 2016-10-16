@@ -6,7 +6,6 @@ fabrik.paths
 This module generates the various paths used by fabrik.
 """
 
-
 from fabric.state import env
 from unipath import Path
 
@@ -52,7 +51,7 @@ def get_current_release_name():
 
     try:
         int(release.absolute().name)
-    except ValueError, e:
+    except ValueError as e:
         print e
         return
 
