@@ -27,7 +27,7 @@ default_flags = (
 @task
 def install(install_path=None):
     if not install_path:
-        install_path = paths.get_current_release_path()
+        install_path = paths.get_source_path(env.current_release)
 
     with(env.cd(install_path)):
         env.run("curl -sS https://getcomposer.org/installer | php")
@@ -36,7 +36,7 @@ def install(install_path=None):
 @task
 def update(install_path=None):
     if not install_path:
-        install_path = paths.get_current_release_path()
+        install_path = paths.get_source_path(env.current_release)
 
     flags = default_flags
 
