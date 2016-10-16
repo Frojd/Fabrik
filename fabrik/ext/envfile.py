@@ -6,8 +6,10 @@ fabrik.ext.envfile
 Contains .env-file helpers
 """
 
-from fabric.decorators import task
+import os.path
+
 from fabric.state import env
+from fabric.decorators import task
 from fabrik import paths
 
 
@@ -21,5 +23,5 @@ def create_env():
 def symlink_env():
     paths.symlink(
         paths.get_shared_path(".env"),
-        paths.get_current_path(".env")
+        os.path.join(paths.get_source_path(env.current_release), ".env")
     )
