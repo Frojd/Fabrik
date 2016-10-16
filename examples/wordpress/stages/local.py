@@ -12,7 +12,8 @@ from fabrik.utils.elocal import elocal
 
 @task
 def local():
-    from fabrik.recipes import wordpress  # NOQA
+    from fabrik.recipes import wordpress
+    wordpress.register()
 
     # We use local versions of run, cd and exists
     env.run = elocal

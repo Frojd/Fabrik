@@ -13,6 +13,7 @@ from fabrik.utils.elocal import elocal
 @task
 def local():
     from fabrik.recipes import django
+    django.register()
 
     # We use local versions of run, cd and exists
     env.run = elocal
@@ -34,4 +35,3 @@ def local():
 
     # Venv
     env.venv_path = get_stage_var("VENV_PATH")
-

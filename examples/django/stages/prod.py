@@ -12,6 +12,7 @@ from fabrik.utils import get_stage_var
 @task
 def demo():
     from fabrik.recipes import django_uwsgi
+    django_uwsgi.register()
 
     env.stage = "prod"
     env.branch = "master"

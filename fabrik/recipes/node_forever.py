@@ -7,27 +7,24 @@ This recipe is based on node, but introduces a forever reload on after_deploy
 """
 
 from fabric.state import env
-from fabrik.hooks import hook
-from fabrik.ext import npm, forever, envfile
-from fabrik import paths
+
+from fabrik import paths, hooks
+from fabrik.ext import forever
 from fabrik.recipes import node
 
 
-@hook("setup")
-def setup():
-    envfile.create_env()
-
-
-@hook("deploy")
-def deploy():
-    envfile.symlink_env()
-
-    with(env.cd(paths.get_current_path())):
-        npm.install()
-
-
-@hook("after_deploy")
 def after_deploy():
     with(env.cd(paths.get_current_path())):
         forever.restart()
 
+
+def register():
+    node.register()
+
+    hooks.register_hook("after_deploy", after_deploy)
+
+
+def unregister():
+    node.unregiser()
+
+    hooks.unregister_hook("after_deploy", after_deploy)

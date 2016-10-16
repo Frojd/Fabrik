@@ -2,25 +2,18 @@
 
 """
 fabrik.recipes.wordpress
------------------------------
+--------------------------
 This is a basic wordpress recipe that handles shared htaccess, config and files
 """
 
+import os.path
+
 from fabric.state import env
-from fabrik import paths
-from fabrik.hooks import hook
+
+from fabrik import paths, hooks
 from fabrik.ext import composer
 
 
-@hook("init_tasks")
-def init_tasks():
-    # Remove trailing slash
-    if "public_path" in env:
-        public_path = env.public_path.rstrip("/")
-        env.public_path = public_path
-
-
-@hook("setup")
 def setup():
     env.run("touch %s" % paths.get_shared_path("wp-config.php"))
     env.run("chmod 400 %s" % paths.get_shared_path("wp-config.php"))
@@ -29,7 +22,14 @@ def setup():
     env.run("chmod 644 %s" % paths.get_shared_path(".htaccess"))
 
 
-@hook("deploy")
+def deploy():
+    paths.symlink(
+        paths.get_shared_path("wp-config.php"),
+        os.path.join(paths.get_source_path(env.current_release),
+                     "wp-config.php")
+    )
+
+
 def after_deploy():
     paths.symlink(
         paths.get_shared_path(".htaccess"),
@@ -37,15 +37,18 @@ def after_deploy():
     )
 
     paths.symlink(
-        paths.get_shared_path("wp-config.php"),
-        paths.get_current_path("wp-config.php")
-    )
-
-    paths.symlink(
         paths.get_upload_path(),
         paths.get_current_path("wp-content/uploads")
     )
 
-    if "public_path" in env:
-        paths.symlink(paths.get_current_path(), env.public_path)
 
+def register():
+    hooks.register_hook("setup", setup)
+    hooks.register_hook("deploy", deploy)
+    hooks.register_hook("after_deploy", after_deploy)
+
+
+def unregister():
+    hooks.unregister_hook("setup", setup)
+    hooks.unregister_hook("deploy", deploy)
+    hooks.unregister_hook("after_deploy", after_deploy)
