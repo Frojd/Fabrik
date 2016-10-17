@@ -43,17 +43,19 @@ This project ships with examples for Django and Wordpress (just check `examples/
 
 
 ## Tests
+Tests can be run with `python runtests.py`, this will run the entire suite. Just make sure you run `pip install -r requirements/tests.txt` first.
 
-Tests can be run with `python runtests.py`, this will run the entire suite.
-
-It also possible to run a specific case:  `python runtests.py tests.test_api.TestApi` 
+It also possible to run a specific case:  `python runtests.py tests.test_api.TestApi`
 
 ... or a specific unittest:
 `test_deploy_rollback python runtests.py tests.test_api.TestApi.test_deploy_rollback`
 
 ### Writing tests
-
 All tests should reside in the `tests` directory and prefixed `test_*`, to include a test in the main suite add the test path in `runtests.py`.
+
+
+## Documentation
+The documentation can be found [here](documentation/README.md).
 
 
 ## Contributing
@@ -62,4 +64,3 @@ Want to contribute? Awesome. Just send a pull request.
 
 ## License
 Fabrik is released under the [MIT License](http://www.opensource.org/licenses/MIT).
-

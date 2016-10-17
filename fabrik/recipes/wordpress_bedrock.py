@@ -4,39 +4,29 @@ recipes.wordpress_bedrock
 Recipe for dealing with bedrock based wordpress installations
 """
 
+import os.path
+
+from fabrik import paths, hooks
 from fabric.state import env
-from fabrik import paths
-from fabrik.hooks import hook
-from fabrik.ext import composer
+from fabrik.ext import composer, envfile
 
 
-@hook("init_tasks")
-def init_tasks():
-    # Remove trailing slash
-    if "public_path" in env:
-        public_path = env.public_path.rstrip("/")
-        env.public_path = public_path
-
-
-@hook("setup")
 def setup():
     env.run("touch %s" % paths.get_shared_path(".htaccess"))
     env.run("touch %s" % paths.get_shared_path(".env"))
 
 
-@hook("deploy")
-def after_deploy():
+def deploy():
     composer.install()
     composer.update()
 
+    envfile.symlink_env()
+
+
+def after_deploy():
     paths.symlink(
         paths.get_shared_path(".htaccess"),
         paths.get_current_path(".htaccess")
-    )
-
-    paths.symlink(
-        paths.get_shared_path(".env"),
-        paths.get_current_release_path(".env")
     )
 
     paths.symlink(
@@ -44,5 +34,14 @@ def after_deploy():
         paths.get_current_path("app/uploads")
     )
 
-    if "public_path" in env:
-        paths.symlink(paths.get_current_path(), env.public_path)
+
+def register():
+    hooks.register_hook("setup", setup)
+    hooks.register_hook("deploy", deploy)
+    hooks.register_hook("after_deploy", after_deploy)
+
+
+def unregister():
+    hooks.unregister_hook("setup", setup)
+    hooks.unregister_hook("deploy", after_deploy)
+    hooks.unregister_hook("after_deploy", after_deploy)

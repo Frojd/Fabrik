@@ -50,6 +50,10 @@ def init_tasks():
     if "max_releases" not in env:
         env.max_releases = 5
 
+    if "public_path" in env:
+        public_path = env.public_path.rstrip("/")
+        env.public_path = public_path
+
     run_hook("init_tasks")
 
 
@@ -103,20 +107,16 @@ def deploy():
 
     try:
         run_hook("copy")
-    except Exception, e:
+    except Exception as e:
         return report("Error occurred on copy. Aborting deploy", err=e)
 
-    # Symlink current folder
     if not env.exists(paths.get_source_path(release_name)):
         return report("Source path not found '%s'" %
                       paths.get_source_path(release_name))
 
-    paths.symlink(paths.get_source_path(release_name),
-                  paths.get_current_path())
-
     try:
         run_hook("deploy")
-    except Exception, e:
+    except Exception as e:
         message = "Error occurred on deploy, starting rollback..."
 
         logger.error(message)
@@ -125,11 +125,18 @@ def deploy():
         run_task("rollback")
         return report("Error occurred on deploy")
 
+    # Symlink current folder
+    paths.symlink(paths.get_source_path(release_name),
+                  paths.get_current_path())
+
     # Clean older releases
     if "max_releases" in env:
         cleanup_releases(int(env.max_releases))
 
     run_hook("after_deploy")
+
+    if "public_path" in env:
+        paths.symlink(paths.get_source_path(release_name), env.public_path)
 
     logger.info("Deploy complete")
 
@@ -189,6 +196,7 @@ def debug():
     from fabric.network import ssh
 
     init_tasks()
+
     ssh.util.log_to_file("fabrik-debug.log", 10)
 
 
@@ -200,5 +208,4 @@ def test():
 
     init_tasks()
 
-    # TODO: Added local test support
     env.run("cat /etc/*-release")  # List linux dist info

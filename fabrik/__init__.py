@@ -11,7 +11,7 @@ fabrik
 
 
 __title__ = "fabrik"
-__version__ = "2.2.3"
-__build__ = 223
+__version__ = "3.0.0"
+__build__ = 300
 __license__ = "MIT"
 __copyright__ = "Copyright 2014-2016 Fröjd Interactive AB"

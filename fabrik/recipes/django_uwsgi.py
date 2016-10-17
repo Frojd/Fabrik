@@ -6,18 +6,22 @@ fabrik.recipes.django_uwsgi
 This recipe is based on django, but introduces a uwsgi reload on after_deploy
 """
 
-from fabrik.hooks import hook
 from fabrik.ext import uwsgi
 from fabrik.recipes import django
+from fabrik import hooks
 
 
-@hook("setup")
-def setup():
-    # TODO: Copy .ini file from templates to server
-    pass
-
-
-@hook("after_deploy")
 def after_deploy():
     uwsgi.service_restart()
 
+
+def register():
+    django.register()
+
+    hooks.register_hook("after_deploy", after_deploy)
+
+
+def unregister():
+    django.unregister()
+
+    hooks.unregister_hook("after_deploy", after_deploy)

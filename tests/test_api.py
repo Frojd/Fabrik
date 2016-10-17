@@ -4,44 +4,36 @@ import unittest
 import os.path
 import shutil
 import time
+
 from fabric.state import env
 from fabric.context_managers import lcd
 from fabric.api import settings
+
 from fabrik import paths
 from fabrik.api import setup, deploy, rollback
 from fabrik.utils.elocal import elocal
 from fabrik import hooks
 from fabrik.transfer import git
+from helpers import run_capture, cd_capture, empty_copy
 
 
 # Deregister git copy hook (so we can assign programmatically)
 hooks.unregister_hook("copy", git.copy)
 
-# Run in local mode
-env.run = elocal
-env.cd = lcd
-env.exists = os.path.exists
-
-
-def _empty_copy():
-    """
-    A stub copy method that does nothing more then create a .txt file.
-    """
-
-    source_path = os.path.join(env.current_release, "src")
-
-    env.run("mkdir -p %s" % source_path)
-    env.run("touch %s/app.txt" % source_path)
-
 
 class TestApi(unittest.TestCase):
     def setUp(self):
+        # Run in local mode
+        env.run = elocal
+        env.cd = lcd
+        env.exists = os.path.exists
+
         current_path = os.path.dirname(os.path.abspath(__file__))
         env.app_path = os.path.join(current_path, "tmp")
 
     def tearDown(self):
         hooks.unregister_hook("copy", git.copy)
-        hooks.unregister_hook("copy", _empty_copy)
+        hooks.unregister_hook("copy", empty_copy)
 
         try:
             shutil.rmtree(env.app_path)
@@ -83,7 +75,7 @@ class TestApi(unittest.TestCase):
                         context.exception)
 
     def test_deploy_rollback(self):
-        hooks.register_hook("copy", _empty_copy)
+        hooks.register_hook("copy", empty_copy)
 
         with settings(
                 source_path="src",
@@ -109,11 +101,16 @@ class TestApi(unittest.TestCase):
 
 class TestMaxReleases(unittest.TestCase):
     def setUp(self):
+        # Run in local mode
+        env.run = elocal
+        env.cd = lcd
+        env.exists = os.path.exists
+
         current_path = os.path.dirname(os.path.abspath(__file__))
         env.app_path = os.path.join(current_path, "tmp")
 
     def tearDown(self):
-        hooks.unregister_hook("copy", _empty_copy)
+        hooks.unregister_hook("copy", empty_copy)
 
         try:
             shutil.rmtree(env.app_path)
@@ -127,7 +124,7 @@ class TestMaxReleases(unittest.TestCase):
         is really removed.
         """
 
-        hooks.register_hook("copy", _empty_copy)
+        hooks.register_hook("copy", empty_copy)
 
         with settings(source_path="src", warn_only=True):
             setup()
@@ -152,6 +149,11 @@ class TestDeployGit(unittest.TestCase):
     # TODO: Change git repro url into something connected to the project.
 
     def setUp(self):
+        # Run in local mode
+        env.run = elocal
+        env.cd = lcd
+        env.exists = os.path.exists
+
         current_path = os.path.dirname(os.path.abspath(__file__))
         env.app_path = os.path.join(current_path, "tmp")
 

@@ -7,7 +7,9 @@ from fabric.state import output
 
 
 test_suite = [
-    "tests.test_api"
+    "tests.test_api",
+    "tests.test_ext",
+    "tests.test_recipes",
 ]
 
 

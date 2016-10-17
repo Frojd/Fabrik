@@ -9,7 +9,8 @@ from fabrik.utils import get_stage_var
 
 @task
 def stage():
-    from fabrik.recipes import wordpress  # NOQA
+    from fabrik.recipes import wordpress
+    wordpress.register()
 
     env.stage = "stage"
     env.branch = "develop"

@@ -12,6 +12,7 @@ from fabrik.utils import get_stage_var
 @task
 def stage():
     from fabrik.recipes import django_uwsgi
+    django_uwsgi.register()
 
     env.run = run
     env.cd = cd

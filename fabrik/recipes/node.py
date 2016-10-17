@@ -7,20 +7,27 @@ Recipe for node.js that includes envfile
 """
 
 from fabric.state import env
-from fabrik.hooks import hook
-from fabrik.ext import npm, forever, envfile
-from fabrik import paths
+
+from fabrik import paths, hooks
+from fabrik.ext import npm, envfile
 
 
-@hook("setup")
 def setup():
     envfile.create_env()
 
 
-@hook("deploy")
 def deploy():
     envfile.symlink_env()
 
-    with(env.cd(paths.get_current_path())):
+    with(env.cd(paths.get_source_path(env.current_release))):
         npm.install()
 
+
+def register():
+    hooks.register_hook("setup", setup)
+    hooks.register_hook("deploy", deploy)
+
+
+def unregister():
+    hooks.unregister_hook("setup", setup)
+    hooks.unregister_hook("deploy", deploy)

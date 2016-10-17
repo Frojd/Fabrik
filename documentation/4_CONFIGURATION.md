@@ -15,6 +15,7 @@ Fabrik requires a couple of parameters to work, the standard params (listed belo
 |source_path|If you have a subfolder you want to use as a application front (such as `src`)|
 |current_path|Path where you want your latest release to be linked *(Optional)*|
 |stage|The name of your deployment stage (such as `prod`)|
+|public_path|A custom symlink pointing to current *(Optional)*|
 
 Here's is a [full list of the built in Fabric env vars](http://docs.fabfile.org/en/1.10/usage/env.html#environment-as-configuration)
 

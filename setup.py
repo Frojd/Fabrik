@@ -4,9 +4,9 @@
 import os
 import sys
 import pip
-
-from setuptools import setup, find_packages
 from pip.req import parse_requirements
+from setuptools import setup, find_packages
+
 import fabrik
 
 
