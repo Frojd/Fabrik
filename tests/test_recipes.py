@@ -56,4 +56,8 @@ class TestDjangoRecipe(unittest.TestCase):
         with settings(source_path="src", warn_only=True):
             deploy()
 
-        self.assertTrue(self.out[-2].endswith('current'))
+        self.assertTrue(self.out[-4].endswith('current'))
+        self.assertEquals(
+            self.out[-1],
+            "python manage.py collectstatic --noinput"
+        )

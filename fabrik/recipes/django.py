@@ -18,18 +18,20 @@ def setup():
     virtualenv.create_venv()
 
 
-def after_deploy():
+def deploy():
     envfile.symlink_env()
 
     with prefix("source %s" % (virtualenv.get_path()+"/bin/activate")):
         virtualenv.update_requirements()
         _migrate()
 
-        # Handle invalid collectstatic gracefully
-        _collectstatic()
-
     if "public_path" in env:
         paths.symlink(paths.get_current_path(), env.public_path)
+
+
+def after_deploy():
+    with prefix("source %s" % (virtualenv.get_path()+"/bin/activate")):
+        _collectstatic()
 
 
 def _migrate():
@@ -49,11 +51,13 @@ def rollback():
 
 def register():
     hooks.register_hook("setup", setup)
-    hooks.register_hook("deploy", after_deploy)
+    hooks.register_hook("deploy", deploy)
+    hooks.register_hook("after_deploy", after_deploy)
     hooks.register_hook("rollback", rollback)
 
 
 def unregister():
     hooks.unregister_hook("setup", setup)
-    hooks.unregister_hook("deploy", after_deploy)
+    hooks.unregister_hook("deploy", deploy)
+    hooks.unregister_hook("after_deploy", after_deploy)
     hooks.unregister_hook("rollback", rollback)
