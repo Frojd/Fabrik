@@ -36,25 +36,25 @@ except:
 
 
 setup(
-    name="fabrik",
-    version=fabrik.__version__,
-    description=("A simple to use deployment toolkit built on top of Fabric"),
-    long_description=long_description,
-    author="Fröjd",
-    author_email="martin.sandstrom@frojd.se",
-    url="https://github.com/frojd/fabrik",
-    packages=packages,
-    include_package_data=True,
-    install_requires=install_requires,
-    tests_require=tests_require,
-    entry_points={
+    name = "fabrik",
+    version = fabrik.__version__,
+    description = "A simple to use deployment toolkit built on top of Fabric",
+    long_description = long_description,
+    author = "Fröjd",
+    author_email = "martin.sandstrom@frojd.se",
+    url = "https://github.com/frojd/fabrik",
+    packages = packages,
+    include_package_data = True,
+    install_requires = install_requires,
+    tests_require = tests_require,
+    entry_points = {
         "console_scripts": [
             "fabrik = fabrik.scripts.fabrik:main",
         ]
     },
-    license="MIT",
-    zip_safe=False,
-    classifiers=(
+    license = "MIT",
+    zip_safe = False,
+    classifiers = [
         "Development Status :: 5 - Production/Stable",
         "Environment :: Console",
         "Environment :: Web Environment",
@@ -69,5 +69,5 @@ setup(
         "Topic :: Software Development :: Libraries",
         "Topic :: System :: Software Distribution",
         "Topic :: System :: Systems Administration",
-    ),
+    ],
 )
