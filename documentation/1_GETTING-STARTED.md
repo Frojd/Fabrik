@@ -118,6 +118,30 @@ After that we create stubs for the various server stages (such as prod, dev)
 2. Now time to run a deploy: `fabrik dev deploy`. This command will create a new release with a cloned copy of the application.
 
 
+### Recommended file layout
+
+To keep the deploy script separate from your application we recommend that you put your fabrik files in a catalog called deploy.
+
+```
+├── README.md
+├── circle.yml
+├── deploy
+│   ├── fabfile.py
+│   ├── fabricrc.example.txt
+│   ├── fabricrc.txt
+│   ├── requirements.txt
+│   ├── stages
+│   │   ├── __init__.py
+│   │   ├── prod.py
+│   │   ├── stage.py
+│   ├── tmp
+│   └── venv
+├── src
+│   ├── app.py
+│   ├── ...
+```
+
+
 ### Server requirements
 
 - git installed
