@@ -4,16 +4,16 @@ Fabrik consists of three parts, stages, recipes and extensions.
 ### Stages
 The server stage is stored as a file called {stage}.py and it specifies both the recipe and some of the extensions (depending on recipe). It also defines deployment settings by both loading them from a fabricrc.txt file or hard coded in stage file.
 
-The stages are usually placed in a folder called `envs` or `stages` and are organized like this:
+The stages are placed in a folder called `stages` and are organized like this:
 
 ```
-envs
+stages
     __init__.py
     demo.py
     prod.py
 ```
 
-**Example: envs/__init__.py**
+**Example: stages/__init__.py**
 
 The init file specifies the stages you want to activate. It might also contain stage wide settings, such as repository url.
 
@@ -24,7 +24,7 @@ from prod import prod
 env.repro_url = "git@github.com:Frojd/Yourrepro.git"
 ```
 
-**Example: envs/demo.py**
+**Example: stages/demo.py**
 
 And here is a stage file example, this file represents the demo environment and uses the wordpress recipe.
 
@@ -57,7 +57,7 @@ In the sample below `get_stage_var("USER")` will look for a parameter named `DEM
 Here is a more [detailed example](https://github.com/Frojd/Fabrik/blob/develop/examples/django/fabricrc.template.txt).
 
 ### Recipes
-A recipe is essentially the glue between a stage and extensions. It includes the necessary extensions and applies custom configurations that combine different extensions.
+A recipe is essentially the glue between a stage and extensions. It includes the necessary extensions and applies custom configurations that combine different extensions using hooks.
 
 ### Extensions
-Is esentially a way of interacting with various server tools and software, such as nginx or uwsgi. Should be kept small, flexible and modular.
+Is essentially a way of interacting with various server tools and software, such as nginx or uwsgi. Should be kept small, flexible and modular.
