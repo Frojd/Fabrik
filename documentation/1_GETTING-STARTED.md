@@ -134,7 +134,6 @@ To keep the deploy script separate from your application we recommend that you p
 │   │   ├── __init__.py
 │   │   ├── prod.py
 │   │   ├── stage.py
-│   ├── tmp
 │   └── venv
 ├── src
 │   ├── app.py
