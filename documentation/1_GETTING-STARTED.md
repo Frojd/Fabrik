@@ -20,6 +20,7 @@ Now that python is properly installed, head to your project folder to install fa
 1. Then setup a virtualenv called venv in your project folder: `virtualenv venv`
 1. Activate the environment: `source venv/bin/activate`
 1. Now time to install fabrik: `pip install fabrik`
+1. You also need to include pycrypto: `pip install pycrypto`
 
 **Requirements**
 
@@ -27,6 +28,7 @@ Fabrik is now installed, awesome. Now let's create the requirement files:
 
 1. Create a directory for your requirements: `mkdir requirements`
 1. Add version info: `pip freeze | grep fabrik > requirements/deploy.txt`
+1. Add version info: `pip pycrypto | grep pycrypto >> requirements/deploy.txt`
 
 **Fabfile**
 
