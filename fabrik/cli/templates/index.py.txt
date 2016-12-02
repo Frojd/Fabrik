@@ -1,0 +1,10 @@
+{% if params %}from fabric.state import env  # NOQA
+{% endif %}
+{% for stage in stages %}from {{ stage.NAME }} import {{ stage.NAME }}  # NOQA
+{% endfor %}
+
+{% if params %}
+{% for key in params %}env.{{ key }} = "{{ params[key] }}"
+{% endfor %}
+{% endif %}
+
