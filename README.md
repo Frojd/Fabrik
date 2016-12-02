@@ -15,6 +15,7 @@ Those cases include Wordpress, Node.js and Django. We favor composition and cust
 - Git
 - Rollbacks
 - A full Django deploy script with migrations
+- ClI for scaffolding
 - Virtualenv creation and activation
 - NPM management
 - Nginx
@@ -22,8 +23,9 @@ Those cases include Wordpress, Node.js and Django. We favor composition and cust
 - Forever
 - Envfile handling
 - Celeryd
-- Wordpress
+- Wordpress with bedrock
 - Composer
+- Scp
 
 
 ## Requirements
