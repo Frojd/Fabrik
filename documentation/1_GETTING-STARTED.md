@@ -20,6 +20,7 @@ Now that python is properly installed, head to your project folder to install fa
 1. Then setup a virtualenv called venv in your project folder: `virtualenv venv`
 1. Activate the environment: `source venv/bin/activate`
 1. Now time to install fabrik: `pip install fabrik`
+1. You also need to include pycrypto: `pip install pycrypto`
 
 **Requirements**
 
@@ -27,6 +28,7 @@ Fabrik is now installed, awesome. Now let's create the requirement files:
 
 1. Create a directory for your requirements: `mkdir requirements`
 1. Add version info: `pip freeze | grep fabrik > requirements/deploy.txt`
+1. Add version info: `pip pycrypto | grep pycrypto >> requirements/deploy.txt`
 
 **Fabfile**
 
@@ -116,6 +118,29 @@ After that we create stubs for the various server stages (such as prod, dev)
 	This command will create the proper directories and shared files on the server (depending on your recipe). For instance a wordpress recipe will create a file called wp-config.php in the shared folder.
 	
 2. Now time to run a deploy: `fabrik dev deploy`. This command will create a new release with a cloned copy of the application.
+
+
+### Recommended file layout
+
+To keep the deploy script separate from your application we recommend that you put your fabrik files in a catalog called deploy.
+
+```
+├── README.md
+├── circle.yml
+├── deploy
+│   ├── fabfile.py
+│   ├── fabricrc.example.txt
+│   ├── fabricrc.txt
+│   ├── requirements.txt
+│   ├── stages
+│   │   ├── __init__.py
+│   │   ├── prod.py
+│   │   ├── stage.py
+│   └── venv
+├── src
+│   ├── app.py
+│   ├── ...
+```
 
 
 ### Server requirements
