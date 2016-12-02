@@ -38,6 +38,24 @@ Fabrik can be installed through pip.
 `pip install git+git://github.com/Frojd/Fabrik.git@develop`
 
 
+## Quickstart
+
+To create setup deployment for django, run the following:
+`fabrik_start --stages=stage,prod --recipe=django`
+
+This command will create the following files.
+
+```
+/fabfile.py
+/stages/
+    __init__.py
+    stage.py
+    prod.py
+```
+
+This script will create the necessary files and add git repro setting (if present) and recipe import. Once generated, you'll need to add SSH settings and recipe unique settings by editing the files.
+
+
 ## Examples
 This project ships with examples for Django and Wordpress (just check `examples/*`)
 
