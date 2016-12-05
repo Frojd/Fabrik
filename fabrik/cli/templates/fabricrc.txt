@@ -1,0 +1,11 @@
+{% filter trim %}
+{% for stage in stages %}
+{% if not stage.LOCAL %}
+{{ stage.NAME|upper }}_HOST=
+{{ stage.NAME|upper }}_USER=
+{{ stage.NAME|upper }}_PASSWORD=
+{{ stage.NAME|upper }}_KEY_FILENAME=
+{% endif %}
+{{ stage.NAME|upper }}_APP_PATH=
+{% endfor %}
+{% endfilter %}
