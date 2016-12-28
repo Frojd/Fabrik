@@ -1,6 +1,7 @@
 # Core
 Fabric==1.12.0
 Unipath==1.1
+PyCrypto==2.6.1
 
 # Cli
 jinja2==2.8
