@@ -1,2 +1,9 @@
+# Core
 Fabric==1.12.0
 Unipath==1.1
+PyCrypto==2.6.1
+
+# Cli
+jinja2==2.8
+click>=5.0
+GitPython==1.0.1

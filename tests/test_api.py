@@ -14,7 +14,7 @@ from fabrik.api import setup, deploy, rollback
 from fabrik.utils.elocal import elocal
 from fabrik import hooks
 from fabrik.transfer import git
-from helpers import run_capture, cd_capture, empty_copy
+from helpers import empty_copy
 
 
 # Deregister git copy hook (so we can assign programmatically)
@@ -49,7 +49,7 @@ class TestApi(unittest.TestCase):
         self.assertTrue(os.path.exists(os.path.join(env.app_path, "backup")))
 
     def test_deploy(self):
-        with self.assertRaises(Exception) as context:
+        with self.assertRaises(SystemExit) as context:
             deploy()
 
         self.assertTrue("No copy method has been defined" in context.exception)
@@ -57,7 +57,7 @@ class TestApi(unittest.TestCase):
     def test_deploy_copy(self):
         hooks.register_hook("copy", git.copy)
 
-        with self.assertRaises(Exception) as context:
+        with self.assertRaises(SystemExit) as context:
             deploy()
 
         self.assertTrue("You need to run setup before running deploy" in
@@ -68,11 +68,10 @@ class TestApi(unittest.TestCase):
 
         setup()
 
-        with self.assertRaises(Exception) as context:
+        with self.assertRaises(AttributeError) as context:
             deploy()
 
-        self.assertTrue("Error occurred on copy. Aborting deploy" in
-                        context.exception)
+        self.assertTrue("repro_url" in context.exception)
 
     def test_deploy_rollback(self):
         hooks.register_hook("copy", empty_copy)

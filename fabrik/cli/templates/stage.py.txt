@@ -1,0 +1,46 @@
+"""
+{{ stage.NAME }} environment
+"""
+
+from fabric.state import env
+from fabric.decorators import task
+
+from fabrik.utils import get_stage_var
+{% if stage.LOCAL %}
+from fabric.context_managers import lcd
+from fabrik.utils.elocal import elocal
+{% endif %}
+
+
+@task
+def {{ stage.NAME }}():
+    {% if stage.RECIPE %}
+    # Recipe
+    from fabrik.recipes import {{ stage.RECIPE }}
+    {{ stage.RECIPE }}.register()
+    {% endif %}
+
+    {% if stage.LOCAL %}
+    # Local versions of run/cd/exists
+    env.run = elocal
+    env.cd = lcd
+    env.exists = os.path.exists
+    {% endif %}
+
+    # Metadata
+    env.stage = "{{ stage.NAME }}"
+
+    # VC
+    env.branch = None
+
+    # SSH Config
+    {% if not stage.LOCAL %}
+    env.hosts = [get_stage_var("HOST")]
+    env.user = get_stage_var("USER")
+    env.password = get_stage_var("PASSWORD", "")
+    env.key_filename = get_stage_var("KEY_FILENAME")
+    env.forward_agent = {{ stage.FORWARD_AGENT | default("True") }}
+    {% endif %}
+
+    env.app_path = get_stage_var("APP_PATH")
+    env.source_path = get_stage_var("APP_SOURCE_PATH", "src")

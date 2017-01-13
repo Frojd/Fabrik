@@ -1,8 +1,8 @@
 # How does it work
-Fabrik consists of three parts, stages, recipes and extensions.
+Fabrik consists of three parts, [stages](#stages), [recipes](#recipes) and [extensions](#extensions).
 
 ### Stages
-The server stage is stored as a file called {stage}.py and it specifies both the recipe and some of the extensions (depending on recipe). It also defines deployment settings by both loading them from a fabricrc.txt file or hard coded in stage file.
+The server stage is stored as a file called {stage}.py (example `demo.py`, `stage.py` or `prod.py`) and it specifies both the recipe and some of the extensions (depending on recipe). It also defines deployment settings by both loading them from a fabricrc.txt file or hard coded in stage file.
 
 The stages are placed in a folder called `stages` and are organized like this:
 
