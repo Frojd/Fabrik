@@ -30,7 +30,7 @@ def report(msg, err=None):
     if getattr(env, "raise_errors", True) and err:
         raise
 
-    sys.exit(1)
+    sys.exit(msg)
 
 
 @runs_once

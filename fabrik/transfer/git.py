@@ -20,6 +20,9 @@ from ..logger import logger
 def copy():
     branch = None
 
+    if "repro_url" not in env:
+        logger.warn("repro_url is missing in configuration")
+
     if "branch" in env:
         branch = env.branch
     else:
