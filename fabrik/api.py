@@ -26,8 +26,8 @@ def report(msg, err=None):
     if err:
         logger.error(err)
 
-    if getattr(env, "raise_errors", default=True):
-        raise Exception(msg)
+    if getattr(env, "raise_errors", True) and err:
+        raise
 
 
 @runs_once
