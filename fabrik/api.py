@@ -26,7 +26,7 @@ def report(msg, err=None):
     if err:
         logger.error(err)
 
-    if hasattr(env, "raise_errors") and env.raise_errors:
+    if getattr(env, "raise_errors", default=True):
         raise Exception(msg)
 
 
