@@ -7,6 +7,7 @@ This module implements the fabrik api.
 """
 
 import time
+import sys
 
 from fabric.api import run
 from fabric.state import env
@@ -28,6 +29,8 @@ def report(msg, err=None):
 
     if getattr(env, "raise_errors", True) and err:
         raise
+
+    sys.exit(1)
 
 
 @runs_once
