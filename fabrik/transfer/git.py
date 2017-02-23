@@ -32,8 +32,8 @@ def copy():
     if "branch" in env:
         branch = env.branch
 
-    if not branch and gitext.get_reverse_git_path():
-        path = gitext.get_reverse_git_path()
+    if not branch and gitext.get_reverse_path():
+        path = gitext.get_reverse_path()
         branch = gitext.get_git_branch(path)
 
     if not branch:

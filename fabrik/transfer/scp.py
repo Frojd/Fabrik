@@ -16,14 +16,14 @@ from fabric.context_managers import lcd, cd
 
 from fabrik import paths
 from fabrik.hooks import hook
-from fabrik.utils.gitext import get_reverse_git_path
+from fabrik.utils.gitext import get_reverse_path
 
 
 def get_local_app_path():
     if 'local_app_path' in env:
         return env.local_app_path
 
-    path = get_reverse_git_path()
+    path = get_reverse_path()
     return path
 
 

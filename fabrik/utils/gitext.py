@@ -3,7 +3,7 @@ import git
 from fabrik.utils.elocal import elocal
 
 
-def get_reverse_git_path():
+def get_reverse_path():
     try:
         return elocal('git rev-parse --show-toplevel', capture=True)
     except:
