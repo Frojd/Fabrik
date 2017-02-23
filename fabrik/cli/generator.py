@@ -25,7 +25,7 @@ class Generator(object):
         self.loader = jinja2.FileSystemLoader(templates_dir)
         self.environment = jinja2.Environment(loader=self.loader,
                                               trim_blocks=True,
-                                              lstrip_blocks=True
+                                              lstrip_blocks=True,
                                               )
 
     def create_index(self):
@@ -33,14 +33,15 @@ class Generator(object):
 
         # First we create the fabfile
         template = self.environment.get_template("fabfile.py.txt")
-        output = template.render(stages=self.stages)
+        output = template.render(stages=self.stages, config=self.config)
 
         index_path = os.path.join(self.path, "fabfile.py")
         self.write_file(output, index_path)
 
         # After this we create a stages directory with a index file
         template = self.environment.get_template("index.py.txt")
-        output = template.render(stages=self.stages, params=self.params)
+        output = template.render(stages=self.stages, params=self.params,
+                                 config=self.config)
 
         stage_dir = self.get_stages_path()
         os.makedirs(stage_dir)
@@ -58,7 +59,7 @@ class Generator(object):
     def create_stage(self, name=None):
         template = self.environment.get_template("stage.py.txt")
         stage = self.get_stage(name)
-        output = template.render(stage=stage)
+        output = template.render(stage=stage, config=self.config)
 
         stage_dir = self.get_stages_path()
         if not os.path.exists(stage_dir):
@@ -87,4 +88,3 @@ class Generator(object):
         for stage in stages:
             if not re.search("^\w{1,}$", stage["NAME"]):
                 raise Exception("Bad Configuration")
-

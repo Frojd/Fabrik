@@ -1,5 +1,14 @@
 import git
 
+from fabrik.utils.elocal import elocal
+
+
+def get_reverse_path():
+    try:
+        return elocal('git rev-parse --show-toplevel', capture=True)
+    except:
+        return False
+
 
 def has_git_repro(path=None):
     try:
@@ -19,5 +28,10 @@ def get_git_remote(path=None):
 
 def get_git_branch(path=None):
     repo = git.Repo(path)
-    branch = repo.active_branch
-    return branch.name
+    branch = None
+    try:
+        branch = repo.active_branch
+    except TypeError:
+        pass
+    return branch
+

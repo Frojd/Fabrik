@@ -27,11 +27,10 @@ def {{ stage.NAME }}():
     env.exists = os.path.exists
     {% endif %}
 
-    # Metadata
+    # Version control
+    {% if config.git %}
     env.stage = "{{ stage.NAME }}"
-
-    # VC
-    env.branch = None
+    {% endif %}
 
     # SSH Config
     {% if not stage.LOCAL %}

@@ -4,7 +4,9 @@ import shutil
 
 import git
 from click.testing import CliRunner
-from fabrik.cli import generator, utils
+
+from fabrik.utils import gitext
+from fabrik.cli import generator
 from fabrik.cli.scripts import init, cleanup
 
 
@@ -19,13 +21,13 @@ class GeneratorTest(unittest.TestCase):
     def setUp(self):
         try:
             os.makedirs("./tmp/")
-        except OSError as exception:
+        except OSError as exception:  # NOQA
             pass
 
     def tearDown(self):
         try:
             shutil.rmtree("./tmp/")
-        except OSError as exception:
+        except OSError as exception:  # NOQA
             pass
 
     def test_index_generation(self):
@@ -42,7 +44,7 @@ class GeneratorTest(unittest.TestCase):
         self.assertTrue(os.path.exists("./tmp/fabfile.py"))
         self.assertTrue(os.path.exists("./tmp/stages/__init__.py"))
 
-        with self.assertRaises(OSError) as cm:
+        with self.assertRaises(OSError) as cm:  # NOQA
             gen.create_index()
 
         contents = read_file("./tmp/stages/__init__.py")
@@ -95,7 +97,7 @@ class GeneratorTest(unittest.TestCase):
             "NAME": "demo!"
         }]
 
-        with self.assertRaises(Exception) as cm:
+        with self.assertRaises(Exception) as cm:  # NOQA
             generator.Generator(stages=stages, path="./tmp")
 
     def test_ssh_stage_info(self):
@@ -132,19 +134,19 @@ class GitDetection(unittest.TestCase):
     def tearDown(self):
         try:
             shutil.rmtree("./tmp/")
-        except OSError as exception:
+        except OSError as exception:  # NOQA
             pass
 
     def test_invalid_repro(self):
-        assert utils.has_git_repro("./tmp/") == False
+        assert gitext.has_git_repro("./tmp/") == False
 
     def test_detect_repro(self):
         git_url = "git://github.com/Frojd/Fabrik.git"
 
         repo = git.Repo.clone_from(git_url, "./tmp")
 
-        assert utils.has_git_repro("./tmp/") == True
-        assert utils.get_git_remote("./tmp/") == git_url
+        assert gitext.has_git_repro("./tmp/") == True
+        assert gitext.get_git_remote("./tmp/") == git_url
 
 
 class ConsoleScriptTest(unittest.TestCase):
@@ -165,13 +167,27 @@ class ConsoleScriptTest(unittest.TestCase):
 
         result = runner.invoke(init.main, [
             "--stages=local,dev,live",
-            "--path=./tmp"
-        ])
+            "--path=./tmp",
+        ], catch_exceptions=False)
 
         assert result.exit_code == 0
 
         self.assertTrue(os.path.exists("./tmp/stages"))
         self.assertTrue(os.path.exists("./tmp/stages/local.py"))
+
+    def test_copy_flag(self):
+        runner = CliRunner()
+
+        result = runner.invoke(init.main, [
+            "--stages=local,dev,live",
+            "--copy_method=scp",
+            "--path=./tmp",
+        ], catch_exceptions=False)
+
+        assert result.exit_code == 0
+
+        contents = read_file("./tmp/fabfile.py")
+        self.assertTrue("from fabrik.transfer.scp import copy" in contents)
 
     def test_git_promp(self):
         # TODO: Update setUp/tearDown logic
@@ -187,12 +203,15 @@ class ConsoleScriptTest(unittest.TestCase):
 
         result = runner.invoke(init.main, [
             "--stages=local,dev,live",
-            "--path=./tmp"
-        ])
+            "--path=./tmp",
+            "--copy_method=git",
+        ], catch_exceptions=False)
 
         assert result.exit_code == 0
         assert result.output.startswith("git repository [%s]" % git_url)
 
+        contents = read_file("./tmp/fabfile.py")
+        self.assertTrue("from fabrik.transfer.git import copy" in contents)
         self.assertTrue(os.path.exists("./tmp/stages"))
         self.assertTrue(os.path.exists("./tmp/stages/local.py"))
 
@@ -213,8 +232,9 @@ class ConsoleScriptTest(unittest.TestCase):
         result = runner.invoke(init.main, [
             "--stages=local,dev,live",
             "--path=./tmp",
-            "--recipe=wordpress"
-        ])
+            "--copy_method=git",
+            "--recipe=wordpress",
+        ], catch_exceptions=False)
 
         assert result.exit_code == 0
         assert result.output.startswith("git repository [%s]" % git_url)
@@ -256,20 +276,20 @@ class CleanupTest(unittest.TestCase):
 
         result = runner.invoke(init.main, [
             "--stages=local,dev,live",
-            "--path=./tmp"
-        ])
+            "--path=./tmp",
+        ], catch_exceptions=False)
 
         result = runner.invoke(cleanup.main, [
             "--path=./tmp",
-        ])
+        ], catch_exceptions=False)
 
         assert result.exit_code == 1
         assert result.output.startswith("Do you want to continue?")
 
         result = runner.invoke(cleanup.main, [
             "--path=./tmp",
-            "--force"
-        ])
+            "--force",
+        ], catch_exceptions=False)
 
         assert result.exit_code == 0
 

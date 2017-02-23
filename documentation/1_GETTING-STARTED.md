@@ -87,11 +87,7 @@ After that we create stubs for the various server stages (such as prod, dev)
 	# Include all your stage environments here
 	from stage import stage
 	
-	from fabrik.transfer.git import copy
-	
-	
-	# Put settings used by all env stages
-	env.repro_url = "git@github.com:Frojd/Yourrepro.git"
+	from fabrik.transfer.scp import copy
 	```
 
 **Settings**
@@ -111,7 +107,7 @@ After that we create stubs for the various server stages (such as prod, dev)
 
 ### Deploy
 
-1. Before you can do a deploy you need to run a setuo command: `fabrik dev setup`
+1. Before you can do a deploy you need to run a setup command: `fabrik dev setup`
 	
 	This command will create the proper directories and shared files on the server (depending on your recipe). For instance a wordpress recipe will create a file called wp-config.php in the shared folder.
 	
@@ -143,7 +139,6 @@ To keep the deploy script separate from your application we recommend that you p
 
 ### Server requirements
 
-- git installed
 - A properly configured firewall
 - ssh access
 - posix compatible shell

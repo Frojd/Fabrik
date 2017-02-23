@@ -20,9 +20,15 @@ Fabrik requires a couple of parameters to work, the standard params (listed belo
 Here's is a [full list of the built in Fabric env vars](http://docs.fabfile.org/en/1.10/usage/env.html#environment-as-configuration)
 
 #### Git
+
 |Parameter|Description|
 |----------|:-------------:|
 |repro_url|Url to your git repro (example: `git@github.com:Frojd/Fabrik.git`|
 |branch|Name of your repro branch, defaults to master *(Optional)*|
 
-**TODO: Add more extension configurations**
+#### SCP
+
+|Parameter|Description|
+|----------|:-------------:|
+|scp_ignore_list|List of folders you wish to ignore *(Optional*)|
+|local_app_path|Path you wish to copy, if not defined git root is used *(Optional*)|
