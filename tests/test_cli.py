@@ -97,7 +97,7 @@ class GeneratorTest(unittest.TestCase):
             "NAME": "demo!"
         }]
 
-        with self.assertRaises(Exception) as cm:
+        with self.assertRaises(Exception) as cm:  # NOQA
             generator.Generator(stages=stages, path="./tmp")
 
     def test_ssh_stage_info(self):
@@ -134,7 +134,7 @@ class GitDetection(unittest.TestCase):
     def tearDown(self):
         try:
             shutil.rmtree("./tmp/")
-        except OSError as exception:
+        except OSError as exception:  # NOQA
             pass
 
     def test_invalid_repro(self):

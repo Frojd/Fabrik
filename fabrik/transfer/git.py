@@ -14,6 +14,7 @@ from fabric.state import env
 from fabric.context_managers import settings
 
 from fabrik.hooks import hook
+from fabrik.utils import gitext
 from ..logger import logger
 
 
@@ -30,7 +31,12 @@ def copy():
 
     if "branch" in env:
         branch = env.branch
-    else:
+
+    if not branch and gitext.get_reverse_git_path():
+        path = gitext.get_reverse_git_path()
+        branch = gitext.get_git_branch(path)
+
+    if not branch:
         logger.warn("Git branch not set, using master instead")
         branch = "master"
 
@@ -38,7 +44,7 @@ def copy():
         env.run("git clone  --depth 1 -b %(branch)s %(repro)s %(path)s" % {
             "branch": branch,
             "repro": repro_url,
-            "path": env.current_release
+            "path": env.current_release,
         })
 
 

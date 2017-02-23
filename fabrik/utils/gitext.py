@@ -4,7 +4,10 @@ from fabrik.utils.elocal import elocal
 
 
 def get_reverse_git_path():
-    return elocal('git rev-parse --show-toplevel', capture=True)
+    try:
+        return elocal('git rev-parse --show-toplevel', capture=True)
+    except:
+        return False
 
 
 def has_git_repro(path=None):

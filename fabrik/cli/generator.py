@@ -25,7 +25,7 @@ class Generator(object):
         self.loader = jinja2.FileSystemLoader(templates_dir)
         self.environment = jinja2.Environment(loader=self.loader,
                                               trim_blocks=True,
-                                              lstrip_blocks=True
+                                              lstrip_blocks=True,
                                               )
 
     def create_index(self):
@@ -87,4 +87,3 @@ class Generator(object):
         for stage in stages:
             if not re.search("^\w{1,}$", stage["NAME"]):
                 raise Exception("Bad Configuration")
-
