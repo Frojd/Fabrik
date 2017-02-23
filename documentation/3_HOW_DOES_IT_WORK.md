@@ -20,8 +20,6 @@ The init file specifies the stages you want to activate. It might also contain s
 ```python
 from demo import demo
 from prod import prod
-
-env.repro_url = "git@github.com:Frojd/Yourrepro.git"
 ```
 
 **Example: stages/demo.py**

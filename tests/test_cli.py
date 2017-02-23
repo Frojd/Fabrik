@@ -167,13 +167,27 @@ class ConsoleScriptTest(unittest.TestCase):
 
         result = runner.invoke(init.main, [
             "--stages=local,dev,live",
-            "--path=./tmp"
-        ])
+            "--path=./tmp",
+        ], catch_exceptions=False)
 
         assert result.exit_code == 0
 
         self.assertTrue(os.path.exists("./tmp/stages"))
         self.assertTrue(os.path.exists("./tmp/stages/local.py"))
+
+    def test_copy_flag(self):
+        runner = CliRunner()
+
+        result = runner.invoke(init.main, [
+            "--stages=local,dev,live",
+            "--copy_method=scp",
+            "--path=./tmp",
+        ], catch_exceptions=False)
+
+        assert result.exit_code == 0
+
+        contents = read_file("./tmp/fabfile.py")
+        self.assertTrue("from fabrik.transfer.scp import copy" in contents)
 
     def test_git_promp(self):
         # TODO: Update setUp/tearDown logic
@@ -189,12 +203,15 @@ class ConsoleScriptTest(unittest.TestCase):
 
         result = runner.invoke(init.main, [
             "--stages=local,dev,live",
-            "--path=./tmp"
-        ])
+            "--path=./tmp",
+            "--copy_method=git",
+        ], catch_exceptions=False)
 
         assert result.exit_code == 0
         assert result.output.startswith("git repository [%s]" % git_url)
 
+        contents = read_file("./tmp/fabfile.py")
+        self.assertTrue("from fabrik.transfer.git import copy" in contents)
         self.assertTrue(os.path.exists("./tmp/stages"))
         self.assertTrue(os.path.exists("./tmp/stages/local.py"))
 
@@ -215,8 +232,9 @@ class ConsoleScriptTest(unittest.TestCase):
         result = runner.invoke(init.main, [
             "--stages=local,dev,live",
             "--path=./tmp",
-            "--recipe=wordpress"
-        ])
+            "--copy_method=git",
+            "--recipe=wordpress",
+        ], catch_exceptions=False)
 
         assert result.exit_code == 0
         assert result.output.startswith("git repository [%s]" % git_url)
@@ -258,20 +276,20 @@ class CleanupTest(unittest.TestCase):
 
         result = runner.invoke(init.main, [
             "--stages=local,dev,live",
-            "--path=./tmp"
-        ])
+            "--path=./tmp",
+        ], catch_exceptions=False)
 
         result = runner.invoke(cleanup.main, [
             "--path=./tmp",
-        ])
+        ], catch_exceptions=False)
 
         assert result.exit_code == 1
         assert result.output.startswith("Do you want to continue?")
 
         result = runner.invoke(cleanup.main, [
             "--path=./tmp",
-            "--force"
-        ])
+            "--force",
+        ], catch_exceptions=False)
 
         assert result.exit_code == 0
 
