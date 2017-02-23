@@ -4,7 +4,9 @@ import shutil
 
 import git
 from click.testing import CliRunner
-from fabrik.cli import generator, utils
+
+from fabrik.utils import gitext
+from fabrik.cli import generator
 from fabrik.cli.scripts import init, cleanup
 
 
@@ -19,13 +21,13 @@ class GeneratorTest(unittest.TestCase):
     def setUp(self):
         try:
             os.makedirs("./tmp/")
-        except OSError as exception:
+        except OSError as exception:  # NOQA
             pass
 
     def tearDown(self):
         try:
             shutil.rmtree("./tmp/")
-        except OSError as exception:
+        except OSError as exception:  # NOQA
             pass
 
     def test_index_generation(self):
@@ -42,7 +44,7 @@ class GeneratorTest(unittest.TestCase):
         self.assertTrue(os.path.exists("./tmp/fabfile.py"))
         self.assertTrue(os.path.exists("./tmp/stages/__init__.py"))
 
-        with self.assertRaises(OSError) as cm:
+        with self.assertRaises(OSError) as cm:  # NOQA
             gen.create_index()
 
         contents = read_file("./tmp/stages/__init__.py")
@@ -136,15 +138,15 @@ class GitDetection(unittest.TestCase):
             pass
 
     def test_invalid_repro(self):
-        assert utils.has_git_repro("./tmp/") == False
+        assert gitext.has_git_repro("./tmp/") == False
 
     def test_detect_repro(self):
         git_url = "git://github.com/Frojd/Fabrik.git"
 
         repo = git.Repo.clone_from(git_url, "./tmp")
 
-        assert utils.has_git_repro("./tmp/") == True
-        assert utils.get_git_remote("./tmp/") == git_url
+        assert gitext.has_git_repro("./tmp/") == True
+        assert gitext.get_git_remote("./tmp/") == git_url
 
 
 class ConsoleScriptTest(unittest.TestCase):

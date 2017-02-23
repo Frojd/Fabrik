@@ -1,7 +1,7 @@
 import click
 
 from fabrik.cli import generator
-from fabrik.cli import utils
+from fabrik.utils import gitext
 
 
 @click.command()
@@ -24,8 +24,8 @@ def main(stages, path, recipe):
             "LOCAL": stage == "local"
         })
 
-    if utils.has_git_repro(path):
-        repro_url = utils.get_git_remote(path)
+    if gitext.has_git_repro(path):
+        repro_url = gitext.get_git_remote(path)
         repro_url = click.prompt("git repository", default=repro_url)
 
         config["git"] = True

@@ -1,5 +1,11 @@
 import git
 
+from fabrik.utils.elocal import elocal
+
+
+def get_reverse_git_path():
+    return elocal('git rev-parse --show-toplevel', capture=True)
+
 
 def has_git_repro(path=None):
     try:
