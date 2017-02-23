@@ -68,10 +68,10 @@ class TestApi(unittest.TestCase):
 
         setup()
 
-        with self.assertRaises(AttributeError) as context:
+        with self.assertRaises(SystemExit) as context:
             deploy()
 
-        self.assertTrue("repro_url" in context.exception)
+        self.assertTrue("repro_url" in context.exception.message)
 
     def test_deploy_rollback(self):
         hooks.register_hook("copy", empty_copy)
