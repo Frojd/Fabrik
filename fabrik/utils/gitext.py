@@ -28,5 +28,10 @@ def get_git_remote(path=None):
 
 def get_git_branch(path=None):
     repo = git.Repo(path)
-    branch = repo.active_branch
-    return branch.name
+    branch = None
+    try:
+        branch = repo.active_branch
+    except TypeError:
+        pass
+    return branch
+
