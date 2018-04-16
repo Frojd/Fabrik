@@ -4,7 +4,6 @@
 import os
 import sys
 import pip
-from pip.req import parse_requirements
 from setuptools import setup, find_packages
 
 import fabrik
@@ -16,15 +15,6 @@ if sys.argv[-1] == "publish":
 
 package_exclude = ("tests*", "examples*")
 packages = find_packages(exclude=package_exclude)
-
-# Handle requirements
-requires = parse_requirements("requirements/install.txt",
-                              session=pip.download.PipSession())
-install_requires = [str(ir.req) for ir in requires]
-
-requires = parse_requirements("requirements/tests.txt",
-                              session=pip.download.PipSession())
-tests_require = [str(ir.req) for ir in requires]
 
 
 # Convert markdown to rst
@@ -45,8 +35,22 @@ setup(
     url="https://github.com/frojd/fabrik",
     packages=packages,
     include_package_data=True,
-    install_requires=install_requires,
-    tests_require=tests_require,
+    install_requires=[
+        'Fabric==1.12.0',
+        'Unipath==1.1',
+        'PyCrypto==2.6.1',
+        'jinja2==2.8',
+        'click>=5.0',
+        'GitPython==1.0.1',
+    ],
+    tests_require=[
+        'Fabric==1.12.0',
+        'Unipath==1.1',
+        'PyCrypto==2.6.1',
+        'jinja2==2.8',
+        'click>=5.0',
+        'GitPython==1.0.1',
+    ],
     entry_points={
         "console_scripts": [
             "fabrik = fabrik.scripts.fabrik:main",
