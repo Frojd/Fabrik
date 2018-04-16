@@ -185,7 +185,7 @@ class TestDeployGit(unittest.TestCase):
         with settings(
                 branch="develop",
                 repro_url="git://github.com/Frojd/Wagtail-Boilerplate.git",  # NOQA
-                source_path="src",
+                source_path="{{cookiecutter.project_name}}",
                 warn_only=True):
 
             setup()
