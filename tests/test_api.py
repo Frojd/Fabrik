@@ -192,5 +192,5 @@ class TestDeployGit(unittest.TestCase):
             deploy()
 
             self.assertTrue(os.path.exists(os.path.join(
-                env.app_path, "current", "manage.py")
+                env.app_path, "current", "Makefile")
             ))
