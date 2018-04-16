@@ -184,13 +184,13 @@ class TestDeployGit(unittest.TestCase):
 
         with settings(
                 branch="develop",
-                repro_url="git://github.com/Frojd/Frojd-Django-Boilerplate.git",  # NOQA
-                source_path="src",
+                repro_url="git://github.com/Frojd/Wagtail-Boilerplate.git",  # NOQA
+                source_path="{{cookiecutter.project_name}}",
                 warn_only=True):
 
             setup()
             deploy()
 
             self.assertTrue(os.path.exists(os.path.join(
-                env.app_path, "current", "manage.py")
+                env.app_path, "current", "Makefile")
             ))
