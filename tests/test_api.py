@@ -184,7 +184,7 @@ class TestDeployGit(unittest.TestCase):
 
         with settings(
                 branch="develop",
-                repro_url="git://github.com/Frojd/Frojd-Django-Boilerplate.git",  # NOQA
+                repro_url="git://github.com/Frojd/Wagtail-Boilerplate.git",  # NOQA
                 source_path="src",
                 warn_only=True):
 
